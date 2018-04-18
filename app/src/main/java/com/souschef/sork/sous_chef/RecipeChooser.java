@@ -81,6 +81,7 @@ public class RecipeChooser extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        // TODO test
         getSupportActionBar().hide();
     }
 
