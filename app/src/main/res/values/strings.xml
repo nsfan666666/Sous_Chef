@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Sous_Chef</string>
+    <string name="showingText">Response Text</string>
 </resources>

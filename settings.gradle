@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':lib', ':commons-lang3-3.7'
