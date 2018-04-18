@@ -15,9 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher"
-            tools:layout_editor_absoluteX="131dp"
-            tools:layout_editor_absoluteY="108dp" />
+            android:src="@mipmap/ic_launcher" />
 
         <LinearLayout
             android:id="@+id/name_container"
@@ -28,21 +26,59 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/section_label"
+                android:id="@+id/recipe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                tools:layout_constraintLeft_creator="1"
-                tools:layout_constraintTop_creator="1"
                 android:text="Recipe:"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="#DDFFFFFF"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottom_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/cover"
+            android:background="#88000000"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="y/5, x min"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="#DDFFFFFF"/>
+
+            <TextView
+                android:id="@+id/right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="x-y portions"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAlignment="textEnd"
+                android:textColor="#DDFFFFFF"/>
+
+        </LinearLayout>
+
+
+
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
