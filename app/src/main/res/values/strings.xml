@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Sous_Chef</string>
+    <string name="title_activity_recipe_chooser">RecipeChooser</string>
+    <string name="action_settings">Settings</string>
     <string name="showingText">Response Text</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

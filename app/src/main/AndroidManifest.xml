@@ -22,7 +22,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".IntroActivity" />
-        <activity android:name=".Test"></activity>
+        <activity android:name=".Test" />
+        <activity
+            android:name=".RecipeChooser"
+            android:label="@string/title_activity_recipe_chooser"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
