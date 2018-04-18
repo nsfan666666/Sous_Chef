@@ -49,6 +49,7 @@ public class RecipeChooser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_chooser);
 
+        // TEST
         // TODO Add some test recipes
         recipeList = new ArrayList<>();
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.spaghetti);
@@ -137,8 +138,6 @@ public class RecipeChooser extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_recipe_chooser, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER) - 1;
 
@@ -147,6 +146,16 @@ public class RecipeChooser extends AppCompatActivity {
                 Recipe recipe = recipeList.get(sectionNumber);
                 if(recipe != null) {
                     cover.setImageBitmap(recipe.cover);
+                    TextView recipeName = (TextView) rootView.findViewById(R.id.recipe);
+                    recipeName.setText(recipe.name);
+
+                    TextView leftContent = (TextView) rootView.findViewById(R.id.left);
+                    String leftContentText = recipe.difficulty + "/5, " + recipe.time;
+                    leftContent.setText(leftContentText);
+
+                    TextView rightContent = (TextView) rootView.findViewById(R.id.right);
+                    String rightContentText = recipe.portions + " portions";
+                    rightContent.setText(rightContentText);
                 }
             }
 
