@@ -49,6 +49,7 @@ public class RecipeChooser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_chooser);
 
+        // TEST
         // TODO Add some test recipes
         recipeList = new ArrayList<>();
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.spaghetti);
