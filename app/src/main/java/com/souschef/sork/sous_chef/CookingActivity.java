@@ -1,7 +1,5 @@
 package com.souschef.sork.sous_chef;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,20 +10,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class RecipeChooser extends AppCompatActivity {
+public class CookingActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -42,20 +35,19 @@ public class RecipeChooser extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    private static List<Recipe> recipeList;
+    private static RecipeLite recipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_chooser);
+        setContentView(R.layout.activity_cooking);
 
-        // TEST
-        // TODO Add some test recipes
-        recipeList = Recipe.getSampleRecipes(getResources());
+        recipe = (RecipeLite) getIntent().getExtras().getSerializable(RecipeChooserActivity.PlaceholderFragment.RECIPE_LITE);
 
-
+        /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        */
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -64,15 +56,14 @@ public class RecipeChooser extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        // TODO test
-        getSupportActionBar().hide();
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_recipe_chooser, menu);
+        getMenuInflater().inflate(R.menu.menu_cooking, menu);
         return true;
     }
 
@@ -119,36 +110,12 @@ public class RecipeChooser extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_recipe_chooser, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_cooking, container, false);
 
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER) - 1;
 
-            ImageView cover = (ImageView) rootView.findViewById(R.id.cover);
-            if(sectionNumber < recipeList.size() && sectionNumber >= 0) {
-                Recipe recipe = recipeList.get(sectionNumber);
-                if(recipe != null) {
-                    cover.setImageBitmap(recipe.cover);
-                    cover.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // TODO Show dialog and ask if the user wants to cook this recipe
-                            
-                        }
-                    });
-
-                    TextView recipeName = (TextView) rootView.findViewById(R.id.recipe);
-                    recipeName.setText(recipe.name);
-
-                    TextView leftContent = (TextView) rootView.findViewById(R.id.left);
-                    String leftContentText = recipe.difficulty + "/5, " + recipe.time;
-                    leftContent.setText(leftContentText);
-
-                    TextView rightContent = (TextView) rootView.findViewById(R.id.right);
-                    String rightContentText = recipe.portions + " portions";
-                    rightContent.setText(rightContentText);
-                }
-            }
-
+            TextView currentInstruction = (TextView) rootView.findViewById(R.id.currentInstruction);
+            currentInstruction.setText(recipe.instructions.get(sectionNumber));
             return rootView;
         }
     }
@@ -172,8 +139,8 @@ public class RecipeChooser extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 5 total pages.
-            return 5;
+            // Show 3 total pages.
+            return recipe.instructions.size();
         }
     }
 }
