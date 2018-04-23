@@ -51,26 +51,8 @@ public class RecipeChooser extends AppCompatActivity {
 
         // TEST
         // TODO Add some test recipes
-        recipeList = new ArrayList<>();
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.spaghetti);
-        Recipe recipe1 = new Recipe("Köttfärsås och spaghetti", 2, "4-6", "30 min", bitmap);
-        recipeList.add(recipe1);
+        recipeList = Recipe.getSampleRecipes(getResources());
 
-        Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.biff);
-        Recipe recipe2 = new Recipe("Köttfärsås och spaghetti", 2, "4-6", "30 min", bitmap2);
-        recipeList.add(recipe2);
-
-        Bitmap bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.soppa);
-        Recipe recipe3 = new Recipe("Köttfärsås och spaghetti", 2, "4-6", "30 min", bitmap3);
-        recipeList.add(recipe3);
-
-        Bitmap bitmap4 = BitmapFactory.decodeResource(getResources(), R.drawable.ryggbiff);
-        Recipe recipe4 = new Recipe("Köttfärsås och spaghetti", 2, "4-6", "30 min", bitmap4);
-        recipeList.add(recipe4);
-
-        Bitmap bitmap5 = BitmapFactory.decodeResource(getResources(), R.drawable.hamburgare);
-        Recipe recipe5 = new Recipe("Köttfärsås och spaghetti", 2, "4-6", "30 min", bitmap5);
-        recipeList.add(recipe5);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -146,6 +128,14 @@ public class RecipeChooser extends AppCompatActivity {
                 Recipe recipe = recipeList.get(sectionNumber);
                 if(recipe != null) {
                     cover.setImageBitmap(recipe.cover);
+                    cover.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // TODO Show dialog and ask if the user wants to cook this recipe
+                            
+                        }
+                    });
+
                     TextView recipeName = (TextView) rootView.findViewById(R.id.recipe);
                     recipeName.setText(recipe.name);
 
