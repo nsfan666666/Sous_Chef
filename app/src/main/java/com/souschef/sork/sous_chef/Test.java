@@ -8,6 +8,8 @@ import android.speech.SpeechRecognizer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import android.speech.RecognitionListener;
@@ -38,6 +40,9 @@ public class Test extends AppCompatActivity {
 
     boolean killCommanded = false;
 
+    //The start button
+    private Button startButton;
+
     //legal commands
     private static final String[] VALID_COMMANDS = {
             "next task",
@@ -52,10 +57,20 @@ public class Test extends AppCompatActivity {
         setContentView(R.layout.activity_test);
 
         responseText = findViewById(R.id.responseText);
+
+        startButton = findViewById(R.id.startButton);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startListeningButton();
+            }
+        });
     }
 
-    @Override
-    protected void onStart() {
+   // @Override
+    protected void startListeningButton() {
+       // super.onStart();
+
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         SpeechListener recognitionListener = new SpeechListener();
         speechRecognizer.setRecognitionListener((recognitionListener));
@@ -78,7 +93,7 @@ public class Test extends AppCompatActivity {
         speechRecognizer.startListening(speechIntent);
 
 
-        super.onStart();
+
 
     }
 
@@ -136,12 +151,10 @@ public class Test extends AppCompatActivity {
                     Log.d(TAG, "Results are: " + matches.toString());
                     final ArrayList<String> matchesStrings = matches;
                     processCommand(matchesStrings);
-                    if (!killCommanded)
-                        speechRecognizer.startListening(speechIntent);
-                    else
-                        finish();
+
                 }
             }
+
 
         }
 
@@ -165,6 +178,7 @@ public class Test extends AppCompatActivity {
             for (int j = 0; j < maxStrings && !resultFound; j++) {
                 if (StringUtils.getLevenshteinDistance(matchesStrings.get(j), VALID_COMMANDS[i]) < (VALID_COMMANDS[i].length() / 3)) {
                     response = getResponse(i);
+
                 }
             }
 
