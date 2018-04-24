@@ -53,10 +53,6 @@ public class RecipeChooserActivity extends AppCompatActivity {
 
         recipeList = Recipe.getSampleRecipes(getResources());
 
-        /*
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        */
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -64,11 +60,6 @@ public class RecipeChooserActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        // TODO test
-        /*
-        getSupportActionBar().hide();
-        */
     }
 
 
@@ -146,18 +137,11 @@ public class RecipeChooserActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             // Start cooking activity
-                            /*
-                            Intent intent = new Intent(getContext(), CookingActivity.class);
+                            Intent intent = new Intent(getContext(), ProgressBarTest.class);
                             Bundle args = new Bundle();
-
                             ArrayList<String> instructions = (ArrayList<String>) recipe.instructions;
                             args.putSerializable(RECIPE_LITE, recipe.getLite());
-
                             intent.putExtras(args);
-                            startActivity(intent);
-                            */
-
-                            Intent intent = new Intent(getContext(), ProgressBarTest.class);
                             startActivity(intent);
                         }
                     });

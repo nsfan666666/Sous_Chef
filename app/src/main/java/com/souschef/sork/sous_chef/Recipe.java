@@ -46,6 +46,12 @@ public class Recipe{
         instructions1.add("Hacka lök");
         instructions1.add("Fräs gul lök");
         instructions1.add("Stek köttfärs");
+        instructions1.add("Stek köttfärs");
+        instructions1.add("Stek köttfärs");
+        instructions1.add("Stek köttfärs");
+        instructions1.add("Stek köttfärs");
+        instructions1.add("Stek köttfärs");
+
         Recipe recipe1 = new Recipe("Köttfärsås och spaghetti", 2, "4-6", "30 min", bitmap1, instructions1, null);
         recipes.add(recipe1);
 

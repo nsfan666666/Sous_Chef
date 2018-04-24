@@ -16,13 +16,19 @@ public class ProgressBarTest extends AppCompatActivity implements VerticalSteppe
     private VerticalStepperFormLayout verticalStepperForm;
     private EditText name;
 
+    private static RecipeLite recipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress_bar_test);
 
-        String[] mySteps = {"Name", "Email", "Phone Number"};
+        recipe = (RecipeLite) getIntent().getExtras().getSerializable(RecipeChooserActivity.PlaceholderFragment.RECIPE_LITE);
+
+
+        String[] instructions = new String[recipe.instructions.size()];
+        instructions = recipe.instructions.toArray(instructions);
+
         int colorPrimary = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary);
         int colorPrimaryDark = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
 
@@ -30,7 +36,7 @@ public class ProgressBarTest extends AppCompatActivity implements VerticalSteppe
         verticalStepperForm = (VerticalStepperFormLayout) findViewById(R.id.vertical_stepper_form);
 
         // Setting up and initializing the form
-        VerticalStepperFormLayout.Builder.newInstance(verticalStepperForm, mySteps, this, this)
+        VerticalStepperFormLayout.Builder.newInstance(verticalStepperForm, instructions, this, this)
                 .primaryColor(colorPrimary)
                 .primaryDarkColor(colorPrimaryDark)
                 .displayBottomNavigation(true) // It is true by default, so in this case this line is not necessary
@@ -40,82 +46,18 @@ public class ProgressBarTest extends AppCompatActivity implements VerticalSteppe
     @Override
     public View createStepContentView(int stepNumber) {
         View view = null;
-        switch (stepNumber) {
-            case 0:
-                view = createNameStep();
-                break;
-            case 1:
-                view = createEmailStep();
-                break;
-            case 2:
-                view = createPhoneNumberStep();
-                break;
-        }
+        LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+        view = (LinearLayout) inflater.inflate(R.layout.instruction_layout, null, false);
         return view;
     }
 
-    private View createNameStep() {
-        // Here we generate programmatically the view that will be added by the system to the step content layout
-        name = new EditText(this);
-        name.setSingleLine(true);
-        name.setHint("Your name");
-
-        return name;
-    }
-
-    private View createEmailStep() {
-        // In this case we generate the view by inflating a XML file
-        LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-        LinearLayout emailLayoutContent = (LinearLayout) inflater.inflate(R.layout.email_step_layout, null, false);
-        EditText email = (EditText) emailLayoutContent.findViewById(R.id.email);
-
-        return emailLayoutContent;
-    }
-
-    private View createPhoneNumberStep() {
-        LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-        LinearLayout phoneLayoutContent = (LinearLayout) inflater.inflate(R.layout.phone_step_layout, null, false);
-
-        return phoneLayoutContent;
-    }
-
-
     @Override
     public void onStepOpening(int stepNumber) {
-        switch (stepNumber) {
-            case 0:
-                checkName();
-                break;
-            case 1:
-                checkEmail();
-                break;
-            case 2:
-                // As soon as the phone number step is open, we mark it as completed in order to show the "Continue"
-                // button (We do it because this field is optional, so the user can skip it without giving any info)
-                verticalStepperForm.setStepAsCompleted(2);
-                // In this case, the instruction above is equivalent to:
-                // verticalStepperForm.setActiveStepAsCompleted();
-                break;
-        }
-    }
-
-    private void checkName() {
-
-        if(name.length() >= 3 && name.length() <= 40) {
-            verticalStepperForm.setActiveStepAsCompleted();
-        } else {
-            // This error message is optional (use null if you don't want to display an error message)
-            String errorMessage = "The name must have between 3 and 40 characters";
-            verticalStepperForm.setActiveStepAsUncompleted(errorMessage);
-        }
-    }
-
-    private void checkEmail() {
-
+        verticalStepperForm.setStepAsCompleted(stepNumber);
     }
 
     @Override
     public void sendData() {
-
+        // Do nothing?
     }
 }
