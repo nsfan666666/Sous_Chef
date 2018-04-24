@@ -129,6 +129,14 @@ public class RecipeChooserActivity extends AppCompatActivity {
 
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER) - 1;
 
+            if(sectionNumber == 0 && recipeList.size() > 1 ) {
+                TextView slideIndicator = (TextView) rootView.findViewById(R.id.slideIndicator);
+                slideIndicator.setText("               >");
+            } else if(sectionNumber + 1 == recipeList.size()) {
+                TextView slideIndicator = (TextView) rootView.findViewById(R.id.slideIndicator);
+                slideIndicator.setText("<               ");
+            }
+
             ImageView cover = (ImageView) rootView.findViewById(R.id.cover);
             if(sectionNumber < recipeList.size() && sectionNumber >= 0) {
                 final Recipe recipe = recipeList.get(sectionNumber);
