@@ -46,7 +46,7 @@ public class Recipe{
         ArrayList<String> instructions1 = new ArrayList<>();
         instructions1.add("Koka vatten");
         instructions1.add("Hacka lök");
-        instructions1.add("Fräs gul lök");
+        instructions1.add("Fräs gül lök");
         instructions1.add("Stek köttfärs");
         instructions1.add("Stek köttfärs");
         instructions1.add("Stek köttfärs");

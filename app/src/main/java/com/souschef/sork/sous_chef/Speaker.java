@@ -15,7 +15,7 @@ public class Speaker extends AppCompatActivity{
         toSpeech = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                toSpeech.setLanguage(Locale.US);
+                toSpeech.setLanguage(Locale.GERMAN);
             }
         });
 
