@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import ernestoyaquello.com.verticalstepperform.*;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
@@ -25,6 +26,9 @@ public class ProgressBarTest extends AppCompatActivity implements VerticalSteppe
 
         recipe = (RecipeLite) getIntent().getExtras().getSerializable(RecipeChooserActivity.PlaceholderFragment.RECIPE_LITE);
 
+
+        TextView recipeTitle = (TextView) findViewById(R.id.recipe);
+        recipeTitle.setText(recipe.name);
 
         String[] instructions = new String[recipe.instructions.size()];
         instructions = recipe.instructions.toArray(instructions);

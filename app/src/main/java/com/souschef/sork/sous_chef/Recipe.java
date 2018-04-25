@@ -54,7 +54,7 @@ public class Recipe{
         instructions1.add("Stek köttfärs");
         instructions1.add("Stek köttfärs");
 
-        Recipe recipe1 = new Recipe("Köttfärsås och spaghetti", 2, "4-6", "30 min", bitmap1, instructions1, null, null);
+        Recipe recipe1 = new Recipe("Spaghetti Bolognese", 2, "4-6", "30 min", bitmap1, instructions1, null, null);
         recipes.add(recipe1);
 
         Bitmap bitmap2 = BitmapFactory.decodeResource(resources, R.drawable.biff);
