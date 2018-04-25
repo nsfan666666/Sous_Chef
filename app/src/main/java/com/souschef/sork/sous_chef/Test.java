@@ -24,7 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 
 
-public class Test extends AppCompatActivity implements SensorEventListener{
+public class Test extends AppCompatActivity implements SensorEventListener {
 
     private final static String TAG = Test.class.getName();
 
@@ -78,9 +78,9 @@ public class Test extends AppCompatActivity implements SensorEventListener{
         proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
     }
 
-   // @Override
+    // @Override
     protected void startListeningButton() {
-       // super.onStart();
+        // super.onStart();
 
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         SpeechListener recognitionListener = new SpeechListener();
@@ -93,7 +93,7 @@ public class Test extends AppCompatActivity implements SensorEventListener{
         speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 
         //Specifiy how many results you want to receive. The results will be sorted where the first result is the one with higher confidence.
-        speechIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS,20);
+        speechIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 20);
 
         speechIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
 
@@ -104,15 +104,22 @@ public class Test extends AppCompatActivity implements SensorEventListener{
         speechRecognizer.startListening(speechIntent);
 
 
-
-
     }
 
+    //Implemented method from SensorEventListener.
     @Override
     protected void onResume() {
         // Register a listener for the sensor.
         super.onResume();
         sensorManager.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    //Implemented method from SensorEventListener.
+    @Override
+    protected void onPause() {
+        // Be sure to unregister the sensor when the activity pauses.
+        super.onPause();
+        sensorManager.unregisterListener(this);
     }
 
 
@@ -126,13 +133,14 @@ public class Test extends AppCompatActivity implements SensorEventListener{
                 startListeningButton();
             } else {
                 //far
-               // Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
                 startListeningButton();
             }
         }
 
     }
 
+    //Implemented method from SensorEventListener.
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
@@ -170,12 +178,11 @@ public class Test extends AppCompatActivity implements SensorEventListener{
         @Override
         public void onError(int error) {
             //if (critical error) then exit
-            if (error == SpeechRecognizer.ERROR_CLIENT ) {
+            if (error == SpeechRecognizer.ERROR_CLIENT) {
                 Log.d(TAG, "Client error");
-            }else if( error == SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS){
+            } else if (error == SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS) {
                 Log.d(TAG, "DUDE, you need permissions");
-            }
-            else {
+            } else {
                 Log.d(TAG, "Other error");
                 //speechRecognizer.startListening(speechIntent);
             }
