@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.speech.SpeechRecognizer;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import android.speech.RecognizerIntent;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class Test extends AppCompatActivity implements SensorEventListener {
@@ -51,6 +53,11 @@ public class Test extends AppCompatActivity implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor proximitySensor;
 
+
+    //Text to speech
+    TextToSpeech toSpeech;
+
+
     //legal commands
     private static final String[] VALID_COMMANDS = {
             "next task",
@@ -76,6 +83,31 @@ public class Test extends AppCompatActivity implements SensorEventListener {
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+
+        toSpeech = new TextToSpeech(Test.this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS){
+                    int result = toSpeech.setLanguage(Locale.US);
+
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
+                        Log.d("TTS","Language not supported");
+
+                    }else
+                        readText();
+                }
+            }
+        });
+    }
+
+    private void readText() {
+        String viewText = responseText.getText().toString();
+
+        toSpeech.speak(viewText, TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    private void readText(String finalResponse) {
+        toSpeech.speak(finalResponse, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     // @Override
@@ -134,7 +166,7 @@ public class Test extends AppCompatActivity implements SensorEventListener {
             } else {
                 //far
                 // Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
-                startListeningButton();
+               // startListeningButton();
             }
         }
 
@@ -199,10 +231,8 @@ public class Test extends AppCompatActivity implements SensorEventListener {
                     Log.d(TAG, "Results are: " + matches.toString());
                     final ArrayList<String> matchesStrings = matches;
                     processCommand(matchesStrings);
-
                 }
             }
-
 
         }
 
@@ -226,7 +256,6 @@ public class Test extends AppCompatActivity implements SensorEventListener {
             for (int j = 0; j < maxStrings && !resultFound; j++) {
                 if (StringUtils.getLevenshteinDistance(matchesStrings.get(j), VALID_COMMANDS[i]) < (VALID_COMMANDS[i].length() / 3)) {
                     response = getResponse(i);
-
                 }
             }
 
@@ -239,13 +268,16 @@ public class Test extends AppCompatActivity implements SensorEventListener {
                 responseText.setText(finalResponse);
             }
         });
+        readText(finalResponse);
     }
+
+
 
     private String getResponse(int command) {
         String returnString = "I'm sorry, Dave. I'm afraid I can't do that";
         switch (command) {
             case 0:
-                returnString = "BOO YAAAH";
+                returnString = "BOOYAH";
                 break;
 
         }
