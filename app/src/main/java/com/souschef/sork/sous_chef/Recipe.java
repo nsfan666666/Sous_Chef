@@ -3,10 +3,6 @@ package com.souschef.sork.sous_chef;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

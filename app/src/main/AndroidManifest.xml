@@ -31,17 +31,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IntroActivity" />
         <activity android:name=".Test" />
         <activity
             android:name=".RecipeChooserActivity"
             android:label="@string/title_activity_recipe_chooser"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".CookingActivity"
-            android:label="@string/title_activity_cooking"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ProgressBarTest"></activity>
+        <activity android:name=".CookingActivity"></activity>
     </application>
 
 </manifest>
