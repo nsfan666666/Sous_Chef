@@ -2,6 +2,10 @@ package com.souschef.sork.sous_chef;
 
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.speech.SpeechRecognizer;
@@ -20,9 +24,11 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 
 
-public class Test extends AppCompatActivity {
+public class Test extends AppCompatActivity implements SensorEventListener{
 
     private final static String TAG = Test.class.getName();
+
+    private final static int SENSOR_SENSITIVITY = 4;
 
     //to keep screen on
     protected PowerManager.WakeLock wakeLock;
@@ -42,6 +48,8 @@ public class Test extends AppCompatActivity {
 
     //The start button
     private Button startButton;
+    private SensorManager sensorManager;
+    private Sensor proximitySensor;
 
     //legal commands
     private static final String[] VALID_COMMANDS = {
@@ -65,6 +73,9 @@ public class Test extends AppCompatActivity {
                 startListeningButton();
             }
         });
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
     }
 
    // @Override
@@ -94,6 +105,36 @@ public class Test extends AppCompatActivity {
 
 
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        // Register a listener for the sensor.
+        super.onResume();
+        sensorManager.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+
+    //Implemented method from SensorEventListener. Decides what happens when sensor changes.
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+            if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
+                //near
+                System.out.print("NEAR");
+                startListeningButton();
+            } else {
+                //far
+               // Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
+                startListeningButton();
+            }
+        }
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
 
@@ -136,7 +177,7 @@ public class Test extends AppCompatActivity {
             }
             else {
                 Log.d(TAG, "Other error");
-                speechRecognizer.startListening(speechIntent);
+                //speechRecognizer.startListening(speechIntent);
             }
 
         }
