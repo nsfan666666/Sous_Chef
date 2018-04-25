@@ -13,7 +13,7 @@ import android.widget.TextView;
 import ernestoyaquello.com.verticalstepperform.*;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 
-public class CookingActivity extends AppCompatActivity implements VerticalStepperForm{
+public class CookingActivity extends AppCompatActivity implements VerticalStepperForm, Commands{
 
     private VerticalStepperFormLayout verticalStepperForm;
     private EditText name;
@@ -33,6 +33,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
         recipe = (RecipeLite) getIntent().getExtras().getSerializable(RecipeChooserActivity.PlaceholderFragment.RECIPE_LITE);
         recipe.instructions.add(0, "Start");
+        recipe.instructionsDescription.add(0, "Start");
 
         TextView recipeTitle = (TextView) findViewById(R.id.recipe);
         recipeTitle.setText(recipe.name);
@@ -62,6 +63,10 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
             view = (LinearLayout) inflater.inflate(R.layout.empty, null, false);
         } else {
             view = (LinearLayout) inflater.inflate(R.layout.cooking_instruction_layout, null, false);
+            TextView description = (TextView) view.findViewById(R.id.description);
+            if(description != null) {
+                description.setText(recipe.instructionsDescription.get(stepNumber));
+            }
         }
         return view;
     }
@@ -69,7 +74,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     @Override
     public void onStepOpening(int stepNumber) {
         if(stepNumber != 0 && stepNumber < recipe.instructions.size()) {
-            String instruction = recipe.instructions.get(stepNumber);
+            String instruction = recipe.instructionsDescription.get(stepNumber);
             if(instruction != null) {
                 speaker.readText(instruction);
             }
@@ -89,5 +94,37 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     @Override
     public void sendData() {
         // Do nothing?
+    }
+
+    // Commands
+
+    @Override
+    public void next() {
+
+    }
+
+    @Override
+    public void previous() {
+
+    }
+
+    @Override
+    public void repeat() {
+
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void startTimer() {
+
+    }
+
+    @Override
+    public void pause() {
+
     }
 }
