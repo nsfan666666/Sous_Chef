@@ -3,6 +3,7 @@ package com.souschef.sork.sous_chef;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
     private static Speaker speaker;
     private static RecipeLite recipe;
+    private int stepCompleted = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
         }
 
         recipe = (RecipeLite) getIntent().getExtras().getSerializable(RecipeChooserActivity.PlaceholderFragment.RECIPE_LITE);
-
+        recipe.instructions.add(0, "Start");
 
         TextView recipeTitle = (TextView) findViewById(R.id.recipe);
         recipeTitle.setText(recipe.name);
@@ -51,24 +53,37 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
                 .displayBottomNavigation(true) // It is true by default, so in this case this line is not necessary
                 .init();
     }
+
     @Override
     public View createStepContentView(int stepNumber) {
         View view = null;
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-        view = (LinearLayout) inflater.inflate(R.layout.cooking_instruction_layout, null, false);
+        if(stepNumber == 0) {
+            view = (LinearLayout) inflater.inflate(R.layout.empty, null, false);
+        } else {
+            view = (LinearLayout) inflater.inflate(R.layout.cooking_instruction_layout, null, false);
+        }
         return view;
     }
 
     @Override
     public void onStepOpening(int stepNumber) {
-        if(stepNumber < recipe.instructions.size()) {
+        if(stepNumber != 0 && stepNumber < recipe.instructions.size()) {
             String instruction = recipe.instructions.get(stepNumber);
             if(instruction != null) {
-                speaker.readText(recipe.instructions.get(stepNumber));
+                speaker.readText(instruction);
             }
         }
 
         verticalStepperForm.setStepAsCompleted(stepNumber);
+
+        if(stepCompleted < stepNumber) {
+            stepCompleted = stepNumber;
+        } else {
+            for(int i = stepNumber + 1; i <= stepCompleted; i++) {
+                verticalStepperForm.setStepAsUncompleted(i, null);
+            }
+        }
     }
 
     @Override
