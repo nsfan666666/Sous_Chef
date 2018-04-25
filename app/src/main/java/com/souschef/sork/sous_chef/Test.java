@@ -87,15 +87,8 @@ public class Test extends AppCompatActivity implements SensorEventListener {
         toSpeech = new TextToSpeech(Test.this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS){
-                    int result = toSpeech.setLanguage(Locale.US);
+                   toSpeech.setLanguage(Locale.US);
 
-                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
-                        Log.d("TTS","Language not supported");
-
-                    }else
-                        readText();
-                }
             }
         });
     }
