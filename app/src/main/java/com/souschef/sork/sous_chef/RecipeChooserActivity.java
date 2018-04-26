@@ -199,8 +199,8 @@ public class RecipeChooserActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 5 total pages.
-            return 5;
+            // Determines how many pages will be shown
+            return recipeList.size();
         }
     }
 }
