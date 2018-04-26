@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +36,11 @@ public class RecipeChooserActivity extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    private static ViewPager mViewPager;
 
     private static List<Recipe> recipeList;
+
+    private static Speaker speaker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +53,14 @@ public class RecipeChooserActivity extends AppCompatActivity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        if(speaker == null) {
+            speaker = new Speaker(this);
+        }
     }
 
 
@@ -126,18 +134,34 @@ public class RecipeChooserActivity extends AppCompatActivity {
                 final Recipe recipe = recipeList.get(sectionNumber);
                 if(recipe != null) {
                     cover.setImageBitmap(recipe.cover);
-                    cover.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // Start cooking activity
-                            Intent intent = new Intent(getContext(), CookingActivity.class);
-                            Bundle args = new Bundle();
-                            ArrayList<String> instructions = (ArrayList<String>) recipe.instructions;
-                            args.putSerializable(RECIPE_LITE, recipe.getLite());
-                            intent.putExtras(args);
-                            startActivity(intent);
-                        }
-                    });
+
+                    if(sectionNumber != 0) {
+                        // Force user to the first recipe
+                        cover.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String message = "You should totally try out Spaghetti Bolognese instead!";
+                                speaker.readText(message);
+                                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                                mViewPager.setCurrentItem(0);
+                            }
+                        });
+                    } else {
+                        // Show the instructions for the first recipe
+                        cover.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // Start cooking activity
+                                Intent intent = new Intent(getContext(), CookingActivity.class);
+                                Bundle args = new Bundle();
+                                ArrayList<String> instructions = (ArrayList<String>) recipe.instructions;
+                                args.putSerializable(RECIPE_LITE, recipe.getLite());
+                                intent.putExtras(args);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+
 
                     TextView recipeName = (TextView) rootView.findViewById(R.id.recipe);
                     recipeName.setText(recipe.name);
