@@ -42,7 +42,6 @@ public class Recipe{
 
     public static List<Recipe> getSampleRecipes(Resources resources) {
         ArrayList<Recipe> recipes = new ArrayList<>();
-        Bitmap bitmap1 = BitmapFactory.decodeResource(resources, R.drawable.spaghetti);
         ArrayList<String> instructions1 = new ArrayList<String>();
         instructions1.add("Boil water");
         instructions1.add("Salt water");
@@ -75,25 +74,21 @@ public class Recipe{
         instructionsDescription.add("Add one tablespoon of oregano, one tablespoon of basil, two teespoons of sage and a pinch of white pepper");
         instructionsDescription.add("Stir so that it evens out and it is ready for serving");
 
-
+        Bitmap bitmap1 = BitmapFactory.decodeResource(resources, R.drawable.spaghetti);
         Recipe recipe1 = new Recipe("Spaghetti Bolognese", 2, "4-6", "30 min", bitmap1, instructions1, instructionsDescription, null);
         recipes.add(recipe1);
 
-        Bitmap bitmap2 = BitmapFactory.decodeResource(resources, R.drawable.biff);
-        Recipe recipe2 = new Recipe("Lammfärsbiffar", 2, "4-6", "30 min", bitmap2, null, null, null);
+        Bitmap bitmap2 = BitmapFactory.decodeResource(resources, R.drawable.soup);
+        Recipe recipe2 = new Recipe("White Bean Blender Soup", 2, "2-4", "50 min", bitmap2, null, null, null);
         recipes.add(recipe2);
 
-        Bitmap bitmap3 = BitmapFactory.decodeResource(resources, R.drawable.soppa);
-        Recipe recipe3 = new Recipe("Delikatessoppa", 2, "4-6", "30 min", bitmap3, null, null, null);
+        Bitmap bitmap3 = BitmapFactory.decodeResource(resources, R.drawable.pancake);
+        Recipe recipe3 = new Recipe("Homemade Japanese Pancakes", 3, "4-6", "30 min", bitmap3, null, null, null);
         recipes.add(recipe3);
 
-        Bitmap bitmap4 = BitmapFactory.decodeResource(resources, R.drawable.ryggbiff);
-        Recipe recipe4 = new Recipe("Ryggbiff", 2, "4-6", "30 min", bitmap4, null, null, null);
+        Bitmap bitmap4 = BitmapFactory.decodeResource(resources, R.drawable.muffins);
+        Recipe recipe4 = new Recipe("Chocolate Chip Muffins", 2, "6-8", "40 min", bitmap4, null, null, null);
         recipes.add(recipe4);
-
-        Bitmap bitmap5 = BitmapFactory.decodeResource(resources, R.drawable.hamburgare);
-        Recipe recipe5 = new Recipe("Hamburgare", 2, "4-6", "30 min", bitmap5, null, null, null);
-        recipes.add(recipe5);
 
         return recipes;
     }
