@@ -61,7 +61,7 @@ public class Recipe{
 
         ArrayList<String> instructionsDescription = new ArrayList<String>();
         instructionsDescription.add("Set four liters of water to boil");
-        instructionsDescription.add("put two teaspoons of salt in the water");
+        instructionsDescription.add("Put two teaspoons of salt in the water");
         instructionsDescription.add("Chop the onion");
         instructionsDescription.add("Put one kg of spaghetti into the water when it boils");
         instructionsDescription.add("Set a timer to eleven minutes. When it rings put the spaghetti into a colander");
