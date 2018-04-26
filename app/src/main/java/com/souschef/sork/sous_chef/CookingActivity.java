@@ -18,7 +18,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     private VerticalStepperFormLayout verticalStepperForm;
     private EditText name;
 
-    private static Speaker speaker;
+    private Speaker speaker;
     private static RecipeLite recipe;
     private int stepCompleted = 0;
 
@@ -27,9 +27,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cooking);
 
-        if(speaker == null) {
-            speaker = new Speaker(this);
-        }
+        speaker = new Speaker(this);
 
         recipe = (RecipeLite) getIntent().getExtras().getSerializable(RecipeChooserActivity.PlaceholderFragment.RECIPE_LITE);
         recipe.instructions.add(0, "Start");
@@ -77,6 +75,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
             String instruction = recipe.instructionsDescription.get(stepNumber);
             if(instruction != null) {
                 speaker.readText(instruction);
+                Log.d("TEST123", "Speaker reading text");
             }
         }
 
