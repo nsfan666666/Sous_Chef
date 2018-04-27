@@ -1,6 +1,9 @@
 package com.souschef.sork.sous_chef;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -8,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -176,7 +180,7 @@ public class RecipeChooserActivity extends AppCompatActivity {
                     //leftContent.setText(leftContentText);
 
                     RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
-                    ratingBar.setNumStars(recipe.rating);
+                    ratingBar.setRating(recipe.rating);
 
                     TextView rightContent = (TextView) rootView.findViewById(R.id.right);
                     String rightContentText = recipe.time + " | " + recipe.portions + " portions";
