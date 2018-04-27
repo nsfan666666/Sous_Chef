@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -166,12 +168,15 @@ public class RecipeChooserActivity extends AppCompatActivity {
                     TextView recipeName = (TextView) rootView.findViewById(R.id.recipe);
                     recipeName.setText(recipe.name);
 
-                    TextView leftContent = (TextView) rootView.findViewById(R.id.left);
-                    String leftContentText = "Difficulty: " + recipe.difficulty + "/5, " + recipe.time;
-                    leftContent.setText(leftContentText);
+                    //TextView leftContent = (TextView) rootView.findViewById(R.id.left);
+                    //String leftContentText = "Difficulty: " + recipe.rating + "/5, " + recipe.time;
+                    //leftContent.setText(leftContentText);
+
+                    RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
+                    ratingBar.setNumStars(recipe.rating);
 
                     TextView rightContent = (TextView) rootView.findViewById(R.id.right);
-                    String rightContentText = recipe.portions + " portions";
+                    String rightContentText = recipe.time + " | " + recipe.portions + " portions";
                     rightContent.setText(rightContentText);
                 }
             }

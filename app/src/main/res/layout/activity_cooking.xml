@@ -25,6 +25,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/recipe" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="10dp"
+            android:background="@android:drawable/ic_btn_speak_now"
+            android:onClick="click" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

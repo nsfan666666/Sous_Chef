@@ -97,33 +97,38 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
     // Commands
 
+    public void click(View view) {
+        // TODO Activate voice recognition
+    }
+
     @Override
     public void next() {
-
+        verticalStepperForm.goToNextStep();
     }
 
     @Override
     public void previous() {
-
+        verticalStepperForm.goToPreviousStep();
     }
 
     @Override
     public void repeat() {
-
+        verticalStepperForm.goToStep(verticalStepperForm.getActiveStepNumber(), true);
     }
 
     @Override
     public void start() {
-
+        next();
     }
 
     @Override
     public void startTimer() {
+        // TODO
 
     }
 
     @Override
     public void pause() {
-
+        // TODO
     }
 }

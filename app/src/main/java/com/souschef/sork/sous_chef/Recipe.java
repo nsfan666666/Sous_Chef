@@ -3,10 +3,7 @@ package com.souschef.sork.sous_chef;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Parcel;
-import android.os.Parcelable;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +14,7 @@ import java.util.Map;
 
 public class Recipe{
     public String name;
-    public int difficulty;
+    public int rating;
     public String portions;
     public String time;
     public Bitmap cover;
@@ -25,9 +22,9 @@ public class Recipe{
     public List<String> instructionsDescription;
     public Map<String, String> ingredients;
 
-    public Recipe(String name, int difficulty, String portions, String time, Bitmap cover, List<String> instructions, List<String> instructionsDescription, Map<String, String> ingredients) {
+    public Recipe(String name, int rating, String portions, String time, Bitmap cover, List<String> instructions, List<String> instructionsDescription, Map<String, String> ingredients) {
         this.name = name;
-        this.difficulty = difficulty;
+        this.rating = rating;
         this.portions = portions;
         this.time = time;
         this.cover = cover;
@@ -75,19 +72,19 @@ public class Recipe{
         instructionsDescription.add("Stir so that it evens out and it is ready for serving");
 
         Bitmap bitmap1 = BitmapFactory.decodeResource(resources, R.drawable.spaghetti);
-        Recipe recipe1 = new Recipe("Spaghetti Bolognese", 2, "4-6", "30 min", bitmap1, instructions1, instructionsDescription, null);
+        Recipe recipe1 = new Recipe("Spaghetti Bolognese", 4, "4-6", "30 min", bitmap1, instructions1, instructionsDescription, null);
         recipes.add(recipe1);
 
         Bitmap bitmap2 = BitmapFactory.decodeResource(resources, R.drawable.soup);
-        Recipe recipe2 = new Recipe("White Bean Blender Soup", 2, "2-4", "50 min", bitmap2, null, null, null);
+        Recipe recipe2 = new Recipe("White Bean Blender Soup", 3, "2-4", "50 min", bitmap2, null, null, null);
         recipes.add(recipe2);
 
         Bitmap bitmap3 = BitmapFactory.decodeResource(resources, R.drawable.pancake);
-        Recipe recipe3 = new Recipe("Homemade Japanese Pancakes", 3, "4-6", "30 min", bitmap3, null, null, null);
+        Recipe recipe3 = new Recipe("Homemade Japanese Pancakes", 5, "4-6", "30 min", bitmap3, null, null, null);
         recipes.add(recipe3);
 
         Bitmap bitmap4 = BitmapFactory.decodeResource(resources, R.drawable.muffins);
-        Recipe recipe4 = new Recipe("Chocolate Chip Muffins", 2, "6-8", "40 min", bitmap4, null, null, null);
+        Recipe recipe4 = new Recipe("Chocolate Chip Muffins", 3, "6-8", "40 min", bitmap4, null, null, null);
         recipes.add(recipe4);
 
         return recipes;
