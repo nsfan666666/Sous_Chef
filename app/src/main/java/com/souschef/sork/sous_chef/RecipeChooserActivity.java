@@ -59,10 +59,13 @@ public class RecipeChooserActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+    }
 
-        if(speaker == null) {
-            speaker = new Speaker(this);
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Must create new speaker here otherwise we risk using a speaker belonging to the previous recipe chooser activity
+        speaker = new Speaker(this);
     }
 
 
