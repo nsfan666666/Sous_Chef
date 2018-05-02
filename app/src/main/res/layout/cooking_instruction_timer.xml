@@ -21,14 +21,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="hh:mm:ss"
-            android:textSize="30dp"/>
+            android:textSize="30dp"
+            android:enabled="false"/>
 
         <Button
             android:id="@+id/start_timer_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Start timer" />
+            android:text="Start timer"
+            android:enabled="false"/>
     </LinearLayout>
 
 </LinearLayout>
