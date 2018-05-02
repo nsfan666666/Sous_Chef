@@ -70,7 +70,15 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("TEST123", "Hejsan");
+        if(command.length() > 0) {
+            if(command.equals("next task")) {
+                next();
+            } else if(command.equals("repeat")) {
+                repeat();
+            } else if(command.equals("previous task")) {
+                previous();
+            }
+        }
     }
 
     @Override
@@ -150,13 +158,12 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
     public void click(View view) {
         // TODO Activate voice recognition
+        command = "";
         Intent intent = new Intent(getBaseContext(), VoiceUI.class);
         Bundle bundle = new Bundle();
         bundle.putString("COMMAND", command);
         intent.putExtras(bundle);
         startActivity(intent);
-
-
     }
 
     @Override
