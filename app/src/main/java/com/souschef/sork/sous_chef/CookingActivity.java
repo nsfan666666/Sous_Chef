@@ -1,6 +1,11 @@
 package com.souschef.sork.sous_chef;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +23,7 @@ import java.util.TimerTask;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 
-public class CookingActivity extends AppCompatActivity implements VerticalStepperForm, Commands{
+public class CookingActivity extends AppCompatActivity implements VerticalStepperForm, Commands, SensorEventListener{
 
     private VerticalStepperFormLayout verticalStepperForm;
     private EditText name;
@@ -30,6 +35,11 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     // Voice
     private VoiceUI voiceUI;
     private Intent intent;
+
+    // Sensor
+    private SensorManager sensorManager;
+    private Sensor proximitySensor;
+    private final static int SENSOR_SENSITIVITY = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +73,9 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
                 .primaryDarkColor(colorPrimaryDark)
                 .displayBottomNavigation(true) // It is true by default, so in this case this line is not necessary
                 .init();
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
     }
 
     @Override
@@ -209,5 +222,20 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
         public void run() {
 
         }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+            if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
+                click(null);
+            }
+        }
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }
