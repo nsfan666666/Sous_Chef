@@ -65,9 +65,10 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
     //legal commands
     private static final String[] VALID_COMMANDS = {
             "next task",
+            "previous task",
             "repeat",
-            "start timer",
-            "previous task"
+            "start timer"
+
     };
     private static final int VALID_COMMANDS_SIZE = VALID_COMMANDS.length;
 
@@ -100,6 +101,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         });
 
         speaker = new Speaker(this);
+        startListeningButton();
     }
 
     private void readText() {
@@ -162,13 +164,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
             if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
-                //near
-                //System.out.print("NEAR");
                 startListeningButton();
-            } else {
-                //far
-                // Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
-                // startListeningButton();
             }
         }
 
@@ -280,9 +276,17 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         switch (command) {
             case 0:
                 returnString = "next task";
-                CommandMonitor.getMonitor().setCommand(returnString);
                 break;
+            case 1:
+                returnString = "previous task";
+                break;
+            case 2:
+                returnString = "repeat";
+                break;
+
         }
+        CommandMonitor.getMonitor().setCommand(returnString);
+        finish();
         return returnString;
 
     }
