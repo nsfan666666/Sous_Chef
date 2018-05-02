@@ -30,7 +30,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
     private final static String TAG = VoiceUI.class.getName();
 
     private final static int SENSOR_SENSITIVITY = 4;
-    private CookingActivity cookingActivity;
 
     //to keep screen on
     protected PowerManager.WakeLock wakeLock;
@@ -60,9 +59,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
     private Speaker speaker;
 
-    public VoiceUI(CookingActivity cookingActivity){
-        this.cookingActivity = cookingActivity;
-    }
 
     //legal commands
     private static final String[] VALID_COMMANDS = {
@@ -280,7 +276,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         String returnString = "I'm sorry, Dave. I'm afraid I can't do that";
         switch (command) {
             case 0:
-                returnString = "BOOYAH";
+                returnString = "Next task";
                 break;
         }
         return returnString;
