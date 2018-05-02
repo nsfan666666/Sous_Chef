@@ -11,7 +11,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         long start = System.currentTimeMillis();
         setContentView(R.layout.activity_splash);
-        Intent intent = new Intent(this, RecipeChooserActivity.class);
+        Intent intent = new Intent(this, VoiceUI.class);
         while(System.currentTimeMillis()<start+3000){
             try {
                 Thread.sleep(200);

@@ -31,7 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Test" />
+        <activity android:name=".VoiceUI" />
         <activity
             android:name=".RecipeChooserActivity"
             android:label="@string/title_activity_recipe_chooser"
