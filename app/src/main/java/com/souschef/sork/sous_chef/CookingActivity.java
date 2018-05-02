@@ -28,7 +28,10 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     private Speaker speaker;
     private static RecipeLite recipe;
     private int stepCompleted = 0;
+
+    // Voice
     private VoiceUI voiceUI;
+    String command = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,12 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
                 .primaryDarkColor(colorPrimaryDark)
                 .displayBottomNavigation(true) // It is true by default, so in this case this line is not necessary
                 .init();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("TEST123", "Hejsan");
     }
 
     @Override
@@ -142,7 +151,12 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     public void click(View view) {
         // TODO Activate voice recognition
         Intent intent = new Intent(getBaseContext(), VoiceUI.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("COMMAND", command);
+        intent.putExtras(bundle);
         startActivity(intent);
+
+
     }
 
     @Override
