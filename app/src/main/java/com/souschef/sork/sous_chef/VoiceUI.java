@@ -293,7 +293,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
 
         }
-
+        finish();
         return returnString;
 
     }

@@ -96,6 +96,15 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
         }
     }
 
+    //Implemented method from SensorEventListener.
+    @Override
+    protected void onPause() {
+        // Be sure to unregister the sensor when the activity pauses.
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+
     @Override
     public View createStepContentView(int stepNumber) {
         View view = null;
@@ -231,6 +240,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
         }
 
     }
+
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
