@@ -2,11 +2,17 @@ package com.souschef.sork.sous_chef;
 
 public class CommandMonitor {
 
-    private volatile String command;
+    static CommandMonitor commandMonitor;
 
-    public CommandMonitor(){
+    private volatile String command = "";
 
+    public static CommandMonitor getMonitor() {
+        if(commandMonitor == null) {
+            commandMonitor = new CommandMonitor();
+        }
+        return commandMonitor;
     }
+
     public synchronized String getCommand(){
         return command;
     }

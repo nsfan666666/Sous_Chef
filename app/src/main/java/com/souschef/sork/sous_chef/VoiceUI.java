@@ -59,8 +59,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
     private Speaker speaker;
 
-    String command;
-
     CommandMonitor monitor;
 
 
@@ -79,8 +77,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-
-        command = getIntent().getExtras().getString("COMMAND");
 
         responseText = findViewById(R.id.responseText);
 
@@ -279,11 +275,12 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
 
     private String getResponse(int command) {
+
         String returnString = "I'm sorry, Dave. I'm afraid I can't do that";
         switch (command) {
             case 0:
                 returnString = "next task";
-                this.command = returnString;
+                CommandMonitor.getMonitor().setCommand(returnString);
                 break;
         }
         return returnString;

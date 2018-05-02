@@ -70,7 +70,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
         super.onResume();
         Log.d("TESTY", "0");
         if(intent != null) {
-            String command = intent.getExtras().getString("COMMANDS").toLowerCase();
+            String command = CommandMonitor.getMonitor().getCommand().toLowerCase();
             Log.d("TESTY", "1");
             if(command.length() > 0) {
                 if(command.equals("next task")) {
@@ -163,9 +163,6 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     public void click(View view) {
         // TODO Activate voice recognition
         intent = new Intent(getBaseContext(), VoiceUI.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("COMMAND", "");
-        intent.putExtras(bundle);
         startActivity(intent);
     }
 
