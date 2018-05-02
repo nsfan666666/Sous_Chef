@@ -1,9 +1,6 @@
 package com.souschef.sork.sous_chef;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -163,7 +160,6 @@ public class RecipeChooserActivity extends AppCompatActivity {
                                 // Start cooking activity
                                 Intent intent = new Intent(getContext(), CookingActivity.class);
                                 Bundle args = new Bundle();
-                                ArrayList<String> instructions = (ArrayList<String>) recipe.instructions;
                                 args.putSerializable(RECIPE_LITE, recipe.getLite());
                                 intent.putExtras(args);
                                 startActivity(intent);

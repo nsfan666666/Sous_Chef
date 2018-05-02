@@ -1,14 +1,21 @@
 package com.souschef.sork.sous_chef;
 
+import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ernestoyaquello.com.verticalstepperform.*;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
@@ -21,6 +28,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     private Speaker speaker;
     private static RecipeLite recipe;
     private int stepCompleted = 0;
+    private VoiceUI voiceUI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +38,17 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
         speaker = new Speaker(this);
 
         recipe = (RecipeLite) getIntent().getExtras().getSerializable(RecipeChooserActivity.PlaceholderFragment.RECIPE_LITE);
-        recipe.instructions.add(0, "Start");
-        recipe.instructionsDescription.add(0, "Start");
+
+        recipe.instructions.add(0, new Instruction("Start", "Start cooking", null));
 
         TextView recipeTitle = (TextView) findViewById(R.id.recipe);
         recipeTitle.setText(recipe.name);
 
         String[] instructions = new String[recipe.instructions.size()];
-        instructions = recipe.instructions.toArray(instructions);
+        for(int i = 0; i < instructions.length; i++) {
+            instructions[i] = recipe.instructions.get(i).title;
+        }
+        //instructions = recipe.instructions.toArray(instructions);
 
         int colorPrimary = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary);
         int colorPrimaryDark = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
@@ -58,12 +69,44 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
         View view = null;
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
         if(stepNumber == 0) {
+            // Start layout
             view = (LinearLayout) inflater.inflate(R.layout.empty, null, false);
+        } else if(recipe.instructions.get(stepNumber).isTimer()) {
+            // Timer layout
+            view = (LinearLayout) inflater.inflate(R.layout.cooking_instruction_timer, null, false);
+            TextView description = (TextView) view.findViewById(R.id.description);
+            if(description != null) {
+                description.setText(recipe.instructions.get(stepNumber).description);
+            }
+            TextView timerText = (TextView) view.findViewById(R.id.timer_text);
+            if(timerText != null) {
+                timerText.setText(recipe.instructions.get(stepNumber).timer.toString());
+            }
+
+            Button startTimerButton = (Button) view.findViewById(R.id.start_timer_button);
+            startTimerButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Button button = (Button) v;
+                    if(button.getText() == "Start timer") {
+                        // TODO Start timer
+                        final Timer timer = new Timer();
+
+                        //timer.scheduleAtFixedRate(timerTask, 0, 1000);
+
+                        button.setText("Pause timer");
+                    } else {
+                        // TODO Pause timer
+                        button.setText("Start timer");
+                    }
+                }
+            });
         } else {
+            // Regular layout
             view = (LinearLayout) inflater.inflate(R.layout.cooking_instruction_layout, null, false);
             TextView description = (TextView) view.findViewById(R.id.description);
             if(description != null) {
-                description.setText(recipe.instructionsDescription.get(stepNumber));
+                description.setText(recipe.instructions.get(stepNumber).description);
             }
         }
         return view;
@@ -72,10 +115,9 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     @Override
     public void onStepOpening(int stepNumber) {
         if(stepNumber != 0 && stepNumber < recipe.instructions.size()) {
-            String instruction = recipe.instructionsDescription.get(stepNumber);
+            String instruction = recipe.instructions.get(stepNumber).description;
             if(instruction != null) {
                 speaker.readText(instruction);
-                Log.d("TEST123", "Speaker reading text");
             }
         }
 
@@ -99,6 +141,8 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
     public void click(View view) {
         // TODO Activate voice recognition
+        Intent intent = new Intent(getBaseContext(), VoiceUI.class);
+        startActivity(intent);
     }
 
     @Override
@@ -130,5 +174,19 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     @Override
     public void pause() {
         // TODO
+    }
+
+    public class CustomTimerTask extends TimerTask {
+        int duration; // Seconds
+        int elapsed;
+
+        public CustomTimerTask(int duration) {
+            this.duration = duration;
+        }
+
+        @Override
+        public void run() {
+
+        }
     }
 }
