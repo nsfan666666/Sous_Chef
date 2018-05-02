@@ -165,7 +165,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
             if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
                 //near
-                System.out.print("NEAR");
+                //System.out.print("NEAR");
                 startListeningButton();
             } else {
                 //far
@@ -281,6 +281,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         switch (command) {
             case 0:
                 returnString = "Next task";
+                this.command = returnString;
                 break;
         }
         return returnString;
