@@ -276,17 +276,24 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         switch (command) {
             case 0:
                 returnString = "next task";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
                 break;
             case 1:
                 returnString = "previous task";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
                 break;
             case 2:
                 returnString = "repeat";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+
                 break;
 
+
         }
-        CommandMonitor.getMonitor().setCommand(returnString);
-        finish();
+
         return returnString;
 
     }

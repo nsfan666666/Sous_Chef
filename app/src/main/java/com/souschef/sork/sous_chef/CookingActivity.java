@@ -9,7 +9,6 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -81,13 +80,12 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("TESTY", "0");
+        sensorManager.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
+
         if(intent != null) {
             String command = CommandMonitor.getMonitor().getCommand().toLowerCase();
-            Log.d("TESTY", "1");
             if(command.length() > 0) {
                 if(command.equals("next task")) {
-                    Log.d("TESTY", "NEXT TASK");
                     next();
                 } else if(command.equals("repeat")) {
                     repeat();
