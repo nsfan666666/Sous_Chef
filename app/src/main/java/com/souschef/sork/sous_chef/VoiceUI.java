@@ -59,6 +59,8 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
     private Speaker speaker;
 
+    String command;
+
 
     //legal commands
     private static final String[] VALID_COMMANDS = {
@@ -75,6 +77,8 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+
+        command = getIntent().getExtras().getString("COMMAND");
 
         responseText = findViewById(R.id.responseText);
 
