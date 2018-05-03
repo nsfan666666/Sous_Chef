@@ -29,7 +29,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
     private final static String TAG = VoiceUI.class.getName();
 
-    private final static int SENSOR_SENSITIVITY = 4;
+    private final static int SENSOR_SENSITIVITY = 5;
 
     //to keep screen on
     protected PowerManager.WakeLock wakeLock;

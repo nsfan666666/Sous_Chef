@@ -37,7 +37,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     // Sensor
     private SensorManager sensorManager;
     private Sensor proximitySensor;
-    private final static int SENSOR_SENSITIVITY = 4;
+    private final static int SENSOR_SENSITIVITY = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,11 +233,13 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
             if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
                 click(null);
             }
         }
+
 
     }
 
