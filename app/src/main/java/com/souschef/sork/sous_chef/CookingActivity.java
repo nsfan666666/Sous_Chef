@@ -85,7 +85,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
         RelativeLayout relativeLayout = (RelativeLayout) verticalStepperForm.getChildAt(0);
         ScrollView scrollView = (ScrollView) relativeLayout.getChildAt(1);
         LinearLayout linearLayout = (LinearLayout) scrollView.getChildAt(0);
-        LinearLayout linearLayout2 = (LinearLayout) linearLayout.getChildAt(15);
+        LinearLayout linearLayout2 = (LinearLayout) linearLayout.getChildAt(linearLayout.getChildCount() - 1);
         RelativeLayout relativeLayout2 = (RelativeLayout) linearLayout2.getChildAt(0);
 
         // Title
