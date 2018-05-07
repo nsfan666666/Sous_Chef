@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -183,6 +184,22 @@ public class RecipeChooserActivity extends AppCompatActivity {
                     rightContent.setText(rightContentText);
                 }
             }
+
+            // Consume the touch events for the top and bottom black bars
+            LinearLayout nameContainer = (LinearLayout) rootView.findViewById(R.id.name_container);
+            LinearLayout bottomContainer = (LinearLayout) rootView.findViewById(R.id.bottom_container);
+            nameContainer.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            });
+            bottomContainer.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            });
 
             return rootView;
         }
