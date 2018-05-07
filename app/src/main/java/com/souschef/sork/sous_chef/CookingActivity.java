@@ -9,11 +9,16 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.Timer;
@@ -74,6 +79,25 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+
+
+        // Change text of last step title and button
+        RelativeLayout relativeLayout = (RelativeLayout) verticalStepperForm.getChildAt(0);
+        ScrollView scrollView = (ScrollView) relativeLayout.getChildAt(1);
+        LinearLayout linearLayout = (LinearLayout) scrollView.getChildAt(0);
+        LinearLayout linearLayout2 = (LinearLayout) linearLayout.getChildAt(15);
+        RelativeLayout relativeLayout2 = (RelativeLayout) linearLayout2.getChildAt(0);
+
+        // Title
+        AppCompatTextView appCompatTextView = (AppCompatTextView) relativeLayout2.getChildAt(2);
+        appCompatTextView.setText("Finish");
+
+        LinearLayout linearLayout3  = (LinearLayout) linearLayout2.getChildAt(2);
+        LinearLayout linearLayout5  = (LinearLayout) linearLayout3.getChildAt(1);
+
+        // Button
+        AppCompatButton appCompatButton = (AppCompatButton)  linearLayout5.getChildAt(0);
+        appCompatButton.setText("Finish");
     }
 
     @Override
@@ -172,18 +196,22 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
     @Override
     public void sendData() {
-        // Do nothing?
+        // When pressing final button
+        // Return to previous activity
+        finish();
     }
 
     // Commands
 
     public void click(View view) {
+
         // Clear any previous commands
         CommandMonitor.getMonitor().setCommand("");
 
         // Start voice listener
         Intent intent = new Intent(getBaseContext(), VoiceUI.class);
         startActivity(intent);
+        
     }
 
     @Override
