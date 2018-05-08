@@ -65,7 +65,12 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
     //legal commands
     private static final String[] VALID_COMMANDS = {
             "next task",
+            "next",
+            "continue",
+            "next please",
+            "continue please",
             "previous task",
+            "previous",
             "repeat",
             "start timer"
 
@@ -280,15 +285,29 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                 finish();
                 break;
             case 1:
-                returnString = "previous task";
+                returnString = "next task";
                 CommandMonitor.getMonitor().setCommand(returnString);
                 finish();
                 break;
             case 2:
+                returnString = "next task";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+            case 3:
+                returnString = "previous task";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+            case 4:
+                returnString = "previous task";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+            case 5:
                 returnString = "repeat";
                 CommandMonitor.getMonitor().setCommand(returnString);
                 finish();
-
                 break;
 
 
