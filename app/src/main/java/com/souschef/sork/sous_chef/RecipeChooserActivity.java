@@ -128,13 +128,50 @@ public class RecipeChooserActivity extends AppCompatActivity {
 
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER) - 1;
 
+            TextView leftSlideIndicator = (TextView) rootView.findViewById(R.id.leftSlideIndicator);
+            TextView rightSlideIndicator = (TextView) rootView.findViewById(R.id.rightSlideIndicator);
+
+            leftSlideIndicator.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
+                }
+            });
+
+            rightSlideIndicator.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+                }
+            });
+
             if(sectionNumber == 0 && recipeList.size() > 1 ) {
-                TextView slideIndicator = (TextView) rootView.findViewById(R.id.slideIndicator);
-                slideIndicator.setText("               >");
+                leftSlideIndicator.setText("");
+                leftSlideIndicator.setOnClickListener(null);
             } else if(sectionNumber + 1 == recipeList.size()) {
-                TextView slideIndicator = (TextView) rootView.findViewById(R.id.slideIndicator);
-                slideIndicator.setText("<               ");
+
+                rightSlideIndicator.setText("");
+                rightSlideIndicator.setOnClickListener(null);
             }
+
+            LinearLayout leftBar = (LinearLayout) rootView.findViewById(R.id.leftBar);
+            LinearLayout rightBar = (LinearLayout) rootView.findViewById(R.id.rightBar);
+
+            leftBar.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Consume touches
+                    return true;
+                }
+            });
+
+            rightBar.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Consume touches
+                    return true;
+                }
+            });
 
             ImageView cover = (ImageView) rootView.findViewById(R.id.cover);
             if(sectionNumber < recipeList.size() && sectionNumber >= 0) {
@@ -142,7 +179,7 @@ public class RecipeChooserActivity extends AppCompatActivity {
                 if(recipe != null) {
                     cover.setImageBitmap(recipe.cover);
 
-                    if(sectionNumber != 0) {
+                    if(sectionNumber != 1) {
                         // Force user to the first recipe
                         cover.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -150,7 +187,7 @@ public class RecipeChooserActivity extends AppCompatActivity {
                                 String message = "You should totally try out Spaghetti Bolognese instead!";
                                 speaker.readText(message);
                                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                                mViewPager.setCurrentItem(0);
+                                mViewPager.setCurrentItem(1);
                             }
                         });
                     } else {
