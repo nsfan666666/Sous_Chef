@@ -97,6 +97,8 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
         // Button
         AppCompatButton appCompatButton = (AppCompatButton)  linearLayout5.getChildAt(0);
         appCompatButton.setText("Finish");
+
+        StartTutorial.showTutorial(StartTutorial.COOKING, this);
     }
 
     @Override

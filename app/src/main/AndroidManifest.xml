@@ -31,14 +31,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".VoiceUI"
-            android:theme="@style/Theme.AppCompat.Dialog.Alert"
-            />
+        <activity
+            android:name=".VoiceUI"
+            android:theme="@style/Theme.AppCompat.Dialog.Alert" />
         <activity
             android:name=".RecipeChooserActivity"
             android:label="@string/title_activity_recipe_chooser"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CookingActivity"></activity>
+        <activity android:name=".CookingActivity" />
+        <activity
+            android:name=".TutorialActivity"
+            android:theme="@style/Transparent"/>
     </application>
 
 </manifest>

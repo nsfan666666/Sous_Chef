@@ -61,6 +61,8 @@ public class RecipeChooserActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        StartTutorial.showTutorial(StartTutorial.RECIPE_CHOOSER, this);
     }
 
     @Override
