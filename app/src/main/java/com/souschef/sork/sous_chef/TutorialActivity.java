@@ -1,5 +1,7 @@
 package com.souschef.sork.sous_chef;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +18,8 @@ public class TutorialActivity extends AppCompatActivity {
         switch (StartTutorial.currentTutorial) {
             case StartTutorial.RECIPE_CHOOSER:
                 // TODO Load the correct image
-
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tut1);
+                image.setImageBitmap(bitmap);
                 break;
             case StartTutorial.COOKING:
                 // TODO Load the correct image
