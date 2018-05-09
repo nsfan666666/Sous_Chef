@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.gigamole.library.PulseView;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -49,6 +51,10 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
     //The start button
     private ImageButton startButton;
+
+    //PulseView
+    private PulseView pulseView;
+
     private SensorManager sensorManager;
     private Sensor proximitySensor;
 
@@ -94,6 +100,8 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
             }
         });
 
+        pulseView = findViewById(R.id.pulseView);
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
@@ -123,6 +131,8 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
     protected void startListeningButton() {
         // super.onStart();
 
+        pulseView.startPulse();
+
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         SpeechListener recognitionListener = new SpeechListener();
         speechRecognizer.setRecognitionListener((recognitionListener));
@@ -143,6 +153,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         this.wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);
         this.wakeLock.acquire();
         speechRecognizer.startListening(speechIntent);
+
 
 
     }
@@ -207,6 +218,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         @Override
         public void onEndOfSpeech() {
             Log.d(TAG, "End of Speech");
+            pulseView.finishPulse();
 
         }
 

@@ -28,5 +28,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     implementation project(':commons-lang3-3.7')
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
+    implementation 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
+    //Maven library for pulsating
+    implementation 'com.github.devlight.pulseview:library:1.0.2'
 }

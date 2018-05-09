@@ -6,19 +6,85 @@
     android:layout_height="match_parent"
     tools:context=".VoiceUI">
 
-
     <EditText
         android:id="@+id/responseText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="147dp"
+        android:layout_marginTop="194dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/showingText"
-        tools:layout_editor_absoluteX="84dp"
-        tools:layout_editor_absoluteY="81dp" />
+        android:text="Name" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/container3"
+        android:layout_toEndOf="@+id/textView3"
+        android:text="@string/repeat" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="77dp"
+        android:text="@string/next_task2" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="12dp"
+        android:text="@string/next_task" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="154dp"
+        android:text="@string/previous" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView6"
+        android:layout_marginEnd="21dp"
+        android:text="@string/start_timer" />
+
+    <FrameLayout
+        android:id="@+id/container3"
+        android:layout_width="match_parent"
+        android:layout_height="333dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true">
+
+        <com.gigamole.library.PulseView
+            android:id="@+id/pulseView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:pv_alpha="70"
+            app:pv_color="#009688"
+            app:pv_icon="@drawable/microphone_icon2"
+            app:pv_icon_height="60dp"
+            app:pv_icon_width="60dp"
+            app:pv_interpolator="@android:anim/linear_interpolator"
+
+            />
+
+
+    </FrameLayout>
+
 
     <LinearLayout
         android:id="@+id/container"
@@ -33,6 +99,11 @@
             android:scaleType="fitXY"
             android:src="@drawable/microphone_icon2"
             android:background="@null"/>
+
+
     </LinearLayout>
+
+
+
 
 </RelativeLayout>

@@ -5,5 +5,10 @@
     <string name="showingText">Response Text</string>
     <string name="title_activity_cooking">CookingActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="next_task">\"Next task\"</string>
+    <string name="next_task2">\"Continue\"</string>
+    <string name="previous">\"Previous\"</string>
+    <string name="repeat">\"Repeat\"</string>
+    <string name="start_timer">\"Start timer\"</string>
 
 </resources>
