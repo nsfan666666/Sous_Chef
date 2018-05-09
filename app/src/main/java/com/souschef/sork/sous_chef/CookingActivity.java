@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -203,7 +202,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
     // Commands
 
-    public void click(View view) {
+    public void startVoice(View view) {
 
         // Clear any previous commands
         CommandMonitor.getMonitor().setCommand("");
@@ -264,7 +263,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
             if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
-                click(null);
+                startVoice(null);
             }
         }
 

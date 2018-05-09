@@ -34,7 +34,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:background="@android:drawable/ic_btn_speak_now"
-            android:onClick="click" />
+            android:onClick="startVoice" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
