@@ -16,7 +16,7 @@ import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.apache.commons.lang3.StringUtils;
@@ -48,7 +48,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
     boolean killCommanded = false;
 
     //The start button
-    private Button startButton;
+    private ImageButton startButton;
     private SensorManager sensorManager;
     private Sensor proximitySensor;
 

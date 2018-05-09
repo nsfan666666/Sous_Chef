@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".VoiceUI">
 
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Button"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="230dp" />
 
     <EditText
         android:id="@+id/responseText"
@@ -27,4 +19,20 @@
         android:text="@string/showingText"
         tools:layout_editor_absoluteX="84dp"
         tools:layout_editor_absoluteY="81dp" />
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true">
+
+        <ImageButton
+            android:id="@+id/startButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/microphone_icon2"
+            android:background="@null"/>
+    </LinearLayout>
+
 </RelativeLayout>
