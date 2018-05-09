@@ -90,20 +90,23 @@ public class Recipe{
 
         Bitmap bitmap1 = BitmapFactory.decodeResource(resources, R.drawable.spaghetti);
         Recipe recipe1 = new Recipe("Spaghetti Bolognese", 4, "4-6", "30 min", bitmap1, instructions1, null);
-        recipes.add(recipe1);
 
         Bitmap bitmap2 = BitmapFactory.decodeResource(resources, R.drawable.soup);
         Recipe recipe2 = new Recipe("White Bean Blender Soup", 3, "2-4", "50 min", bitmap2, null, null);
-        recipes.add(recipe2);
 
         Bitmap bitmap3 = BitmapFactory.decodeResource(resources, R.drawable.pancake);
         Recipe recipe3 = new Recipe("Homemade Japanese Pancakes", 5, "4-6", "30 min", bitmap3, null, null);
-        recipes.add(recipe3);
+
 
         Bitmap bitmap4 = BitmapFactory.decodeResource(resources, R.drawable.muffins);
         Recipe recipe4 = new Recipe("Chocolate Chip Muffins", 3, "6-8", "40 min", bitmap4, null, null);
-        recipes.add(recipe4);
 
+
+
+        recipes.add(recipe2);
+        recipes.add(recipe1);
+        recipes.add(recipe4);
+        recipes.add(recipe3);
 
         return recipes;
     }
