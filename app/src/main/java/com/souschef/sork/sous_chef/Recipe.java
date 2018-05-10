@@ -39,6 +39,7 @@ public class Recipe{
         ArrayList<Recipe> recipes = new ArrayList<>();
 
         ArrayList<Instruction> instructions1 = new ArrayList<>();
+        instructions1.add(new Instruction("Timer test", "Test timer", new Instruction.Timer(0, 0, 5))); // TODO Temp
         instructions1.add(new Instruction("Boil water", "Set four liters of water to boil", null));
         instructions1.add(new Instruction("Salt water", "Put two teaspoons of salt in the water", null));
         instructions1.add(new Instruction("Chop onion", "Chop the onion", null));

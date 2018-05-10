@@ -28,18 +28,6 @@ public class Instruction implements Serializable{
         public Timer(int hours, int minutes, int seconds) {
             duration = 3600 * hours + 60 * minutes + seconds;
         }
-
-        @Override
-        public String toString() {
-            int tempDuration = duration;
-            int hours = tempDuration / 3600;
-            tempDuration = tempDuration % 3600;
-            int minutes = tempDuration / 60;
-            tempDuration = tempDuration % 60;
-            int seconds = tempDuration;
-            return String.format("%02d:%02d:%02d",hours, minutes, seconds);
-        }
-
     }
 }
 

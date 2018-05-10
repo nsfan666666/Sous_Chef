@@ -1,5 +1,6 @@
 package com.souschef.sork.sous_chef;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -15,9 +16,11 @@ import android.widget.TextView;
 
 public class Timer{
 
+    private CookingActivity cookingActivity;
+
     private LinearLayout rootView;
     private CountDownTimer countDownTimer;
-    private boolean timerRunning;
+    public boolean timerRunning;
     private long totalDurationMilliseconds;
     private long timeLeftMilliseconds;
 
@@ -25,11 +28,12 @@ public class Timer{
     private Button start;
     private Button reset;
 
-    public Timer(Context baseContext, long totalDurationMilliseconds) {
+    public Timer(CookingActivity cookingActivity, long totalDurationMilliseconds) {
+        this.cookingActivity = cookingActivity;
         this.totalDurationMilliseconds = totalDurationMilliseconds;
         timeLeftMilliseconds = totalDurationMilliseconds;
 
-        LayoutInflater inflater = LayoutInflater.from(baseContext);
+        LayoutInflater inflater = LayoutInflater.from(cookingActivity.getBaseContext());
         rootView = (LinearLayout) inflater.inflate(R.layout.countdown_timer_layout, null, false);
 
         countdownTimerTextView = (TextView) rootView.findViewById(R.id.countdown_timer);
@@ -41,12 +45,8 @@ public class Timer{
             public void onClick(View v) {
                 if(timerRunning) {
                     pause();
-                    timerRunning = false;
-                    ((Button) v).setText("Start");
                 } else {
                     start();
-                    timerRunning = true;
-                    ((Button) v).setText("Pause");
                 }
             }
         });
@@ -66,29 +66,32 @@ public class Timer{
 
 
     public void start() {
-        if(!timerRunning) {
-            int updateFrequencyMilliseconds = 1000;
+        timerRunning = true;
+        start.setText("Pause");
 
-            countDownTimer = new CountDownTimer(timeLeftMilliseconds, updateFrequencyMilliseconds) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    timeLeftMilliseconds = millisUntilFinished;
-                    countdownTimerTextView.setText(getTimeRemaining());
-                }
+        int updateFrequencyMilliseconds = 1000;
 
-                @Override
-                public void onFinish() {
-                    // TODO Make sound
+        countDownTimer = new CountDownTimer(timeLeftMilliseconds, updateFrequencyMilliseconds) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftMilliseconds = millisUntilFinished;
+                countdownTimerTextView.setText(getTimeRemaining());
+            }
 
-                }
-            };
-            countDownTimer.start();
-            reset.setVisibility(View.VISIBLE);
-        }
+            @Override
+            public void onFinish() {
+                // TODO Temporary
+                cookingActivity.speaker.readText("BEEP, BEEP, BEEP, Timer is up! BEEP, BEEP, BEEP");
+            }
+        };
+        countDownTimer.start();
+        reset.setVisibility(View.VISIBLE);
     }
 
     public void pause() {
         countDownTimer.cancel();
+        timerRunning = false;
+        start.setText("Start");
     }
 
     public void reset() {
@@ -109,4 +112,7 @@ public class Timer{
         return String.format("%02d:%02d:%02d",hours, minutes, seconds);
     }
 
+    public static class TimerPopup {
+
+    }
 }
