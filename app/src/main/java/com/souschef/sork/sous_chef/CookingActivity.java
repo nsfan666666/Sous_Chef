@@ -141,6 +141,11 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
             if(description != null) {
                 description.setText(recipe.instructions.get(stepNumber).description);
             }
+
+            com.souschef.sork.sous_chef.Timer timer = new com.souschef.sork.sous_chef.Timer(getBaseContext(), recipe.instructions.get(stepNumber).timer.duration * 1000);
+            ((LinearLayout) view).addView(timer.getRootView());
+
+            /*
             TextView timerText = (TextView) view.findViewById(R.id.timer_text);
             if(timerText != null) {
                 timerText.setText(recipe.instructions.get(stepNumber).timer.toString());
@@ -164,6 +169,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
                     }
                 }
             });
+            */
         } else {
             // Regular layout
             view = (LinearLayout) inflater.inflate(R.layout.cooking_instruction_layout, null, false);
