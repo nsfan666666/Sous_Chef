@@ -145,7 +145,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
             }
 
             // Add the timer textView and start and pause buttons
-            Timer timer = new Timer(this, recipe.instructions.get(stepNumber).timer.duration * 1000);
+            Timer timer = new Timer(this, recipe.instructions.get(stepNumber).timer.duration * 1000, recipe.instructions.get(stepNumber).timer.expirationMessage);
             timers.put(stepNumber, timer);
             ((LinearLayout) view).addView(timer.getRootView());
 

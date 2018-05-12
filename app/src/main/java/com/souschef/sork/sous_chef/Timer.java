@@ -1,14 +1,23 @@
 package com.souschef.sork.sous_chef;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Robin on 2018-05-10.
@@ -28,13 +37,17 @@ public class Timer{
     private Button start;
     private Button reset;
 
-    // Popup
-    private static TimerPopupActivity timerPopupActivity;
+    private String expirationMessage;
 
-    public Timer(CookingActivity cookingActivity, long totalDurationMilliseconds) {
+    // Popup
+    private volatile static TimerPopupActivity timerPopupActivity;
+    private static Monitor monitor;
+
+    public Timer(CookingActivity cookingActivity, long totalDurationMilliseconds, String expirationMessage) {
         this.cookingActivity = cookingActivity;
         this.totalDurationMilliseconds = totalDurationMilliseconds;
         timeLeftMilliseconds = totalDurationMilliseconds;
+        this.expirationMessage = expirationMessage;
 
         LayoutInflater inflater = LayoutInflater.from(cookingActivity.getBaseContext());
         rootView = (LinearLayout) inflater.inflate(R.layout.countdown_timer_layout, null, false);
@@ -86,16 +99,21 @@ public class Timer{
                 // TODO Temporary
                 cookingActivity.speaker.readText("BEEP, BEEP, BEEP, Timer is up! BEEP, BEEP, BEEP");
 
+                if(monitor == null) {
+                    monitor = new Monitor();
+                }
+
                 if(timerPopupActivity == null) {
                     Intent intent = new Intent(cookingActivity.getBaseContext(), TimerPopupActivity.class);
                     cookingActivity.startActivity(intent);
+                    monitor.popups.add(expirationMessage);
                 } else {
                     if(timerPopupActivity.visible()) {
-                        // TODO
-
+                        monitor.popups.add(expirationMessage);
                     } else {
                         Intent intent = new Intent(cookingActivity.getBaseContext(), TimerPopupActivity.class);
                         cookingActivity.startActivity(intent);
+                        monitor.popups.add(expirationMessage);
                     }
                 }
 
@@ -132,12 +150,18 @@ public class Timer{
 
     public static class TimerPopupActivity extends AppCompatActivity {
         private boolean visible = false;
+        private Speaker speaker;
+        private LinearLayout timerPopupContainer;
+        private Waiter waiter;
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_timer_popup);
             timerPopupActivity = this;
+            speaker = new Speaker(this);
+            timerPopupContainer = findViewById(R.id.timerPopupContainer);
         }
 
         public boolean visible() {
@@ -148,12 +172,70 @@ public class Timer{
         protected void onPause() {
             super.onPause();
             visible = false;
+            waiter.interrupt();
         }
 
         @Override
         protected void onResume() {
             super.onResume();
             visible = true;
+            waiter = new Waiter(this);
+            waiter.start();
+        }
+
+        public void addPopup(String message) {
+            runOnUiThread(new AddPopup(message, getBaseContext(), timerPopupContainer));
+        }
+
+        private static class AddPopup implements Runnable {
+            private String message;
+            private Context context;
+            private LinearLayout timerPopupContainer;
+
+            public AddPopup(String message, Context context, LinearLayout timerPopupContainer) {
+                this.message = message;
+                this.context = context;
+                this.timerPopupContainer = timerPopupContainer;
+            }
+
+            @Override
+            public void run() {
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View view = (LinearLayout) inflater.inflate(R.layout.timer_popup_list_item, null, false);
+                TextView popupTimerInfo = (TextView) view.findViewById(R.id.popup_timer_info);
+                popupTimerInfo.setText(message);
+                timerPopupContainer.addView(view);
+            }
+        }
+
+        private static class Waiter extends Thread {
+            private TimerPopupActivity timerPopupActivity;
+
+            public Waiter(TimerPopupActivity timerPopupActivity) {
+                this.timerPopupActivity = timerPopupActivity;
+            }
+
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(100);
+                        //
+                        if(monitor.popups.size() > 0) {
+                            timerPopupActivity.addPopup(monitor.popups.remove(0));
+                        }
+                    } catch (InterruptedException e) {
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    private static class Monitor extends Observable{
+        private volatile ArrayList<String> popups;
+
+        public Monitor() {
+            popups = new ArrayList<>();
         }
     }
 }
