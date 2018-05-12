@@ -1,9 +1,9 @@
 package com.souschef.sork.sous_chef;
 
-import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +27,9 @@ public class Timer{
     private TextView countdownTimerTextView;
     private Button start;
     private Button reset;
+
+    // Popup
+    private static TimerPopupActivity timerPopupActivity;
 
     public Timer(CookingActivity cookingActivity, long totalDurationMilliseconds) {
         this.cookingActivity = cookingActivity;
@@ -82,6 +85,21 @@ public class Timer{
             public void onFinish() {
                 // TODO Temporary
                 cookingActivity.speaker.readText("BEEP, BEEP, BEEP, Timer is up! BEEP, BEEP, BEEP");
+
+                if(timerPopupActivity == null) {
+                    Intent intent = new Intent(cookingActivity.getBaseContext(), TimerPopupActivity.class);
+                    cookingActivity.startActivity(intent);
+                } else {
+                    if(timerPopupActivity.visible()) {
+                        // TODO
+
+                    } else {
+                        Intent intent = new Intent(cookingActivity.getBaseContext(), TimerPopupActivity.class);
+                        cookingActivity.startActivity(intent);
+                    }
+                }
+
+
             }
         };
         countDownTimer.start();
@@ -112,7 +130,30 @@ public class Timer{
         return String.format("%02d:%02d:%02d",hours, minutes, seconds);
     }
 
-    public static class TimerPopup {
+    public static class TimerPopupActivity extends AppCompatActivity {
+        private boolean visible = false;
 
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_timer_popup);
+            timerPopupActivity = this;
+        }
+
+        public boolean visible() {
+            return visible;
+        }
+
+        @Override
+        protected void onPause() {
+            super.onPause();
+            visible = false;
+        }
+
+        @Override
+        protected void onResume() {
+            super.onResume();
+            visible = true;
+        }
     }
 }

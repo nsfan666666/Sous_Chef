@@ -24,9 +24,11 @@ public class Instruction implements Serializable{
 
     public static class Timer implements Serializable{
         public int duration; // Seconds
+        public String expirationMessage;
 
-        public Timer(int hours, int minutes, int seconds) {
+        public Timer(int hours, int minutes, int seconds, String expirationMessage) {
             duration = 3600 * hours + 60 * minutes + seconds;
+            this.expirationMessage = expirationMessage;
         }
     }
 }

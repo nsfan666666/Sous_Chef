@@ -41,7 +41,9 @@
         <activity android:name=".CookingActivity" />
         <activity
             android:name=".TutorialActivity"
-            android:theme="@style/Transparent"/>
+            android:theme="@style/Transparent" />
+        <activity android:name=".Timer$TimerPopupActivity"
+            android:theme="@style/customPopup"/>
     </application>
 
 </manifest>
