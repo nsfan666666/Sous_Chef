@@ -220,6 +220,7 @@ public class Timer{
                             if(timerPopupActivity != null) {
                                 timerPopupActivity.finish();
                             }
+                            //
                         }
                     }
                 });
