@@ -160,7 +160,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         this.wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);
         this.wakeLock.acquire();
         speechRecognizer.startListening(speechIntent);
-       /*
+
         if (hasPermissions(this, PERMISSIONS)) {
 
 
@@ -183,7 +183,8 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                     })
                     .create().show();
 
-        }*/
+        }
+
 
 
     }
@@ -262,7 +263,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         public void onEndOfSpeech() {
             Log.d(TAG, "End of Speech");
             pulseView.finishPulse();
-            //speechRecognizer.destroy();
 
 
         }
@@ -278,6 +278,8 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                 Log.d(TAG, "Other error");
                 //speechRecognizer.startListening(speechIntent);
             }
+            speechRecognizer.destroy();
+            pulseView.finishPulse();
 
         }
 
@@ -293,12 +295,12 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                     processCommand(matchesStrings);
                 }
             }
-
         }
 
         @Override
         public void onPartialResults(Bundle partialResults) {
             Log.d(TAG, "Partial results");
+
         }
 
         @Override
@@ -311,14 +313,18 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
     private void processCommand(ArrayList<String> matchesStrings) {
         String response = "I'm sorry Dave, I'm afraid I can't do that";
         int maxStrings = matchesStrings.size();
-        boolean resultFound = false;
-        for (int i = 0; i < VALID_COMMANDS_SIZE && !resultFound; i++) {
-            for (int j = 0; j < maxStrings && !resultFound; j++) {
+        boolean resultFound = true;
+        for (int i = 0; i < VALID_COMMANDS_SIZE && resultFound; i++) {
+            for (int j = 0; j < maxStrings && resultFound; j++) {
                 if (StringUtils.getLevenshteinDistance(matchesStrings.get(j), VALID_COMMANDS[i]) < (VALID_COMMANDS[i].length() / 3)) {
                     response = getResponse(i);
                 }
             }
 
+        }
+        if(!resultFound){
+            speechRecognizer.destroy();
+            pulseView.finishPulse();
         }
 
         final String finalResponse = response;
