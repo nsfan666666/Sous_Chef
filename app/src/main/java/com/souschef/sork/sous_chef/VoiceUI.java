@@ -72,7 +72,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
     CommandMonitor monitor;
 
-
     //legal commands
     private static final String[] VALID_COMMANDS = {
             "next task",
@@ -86,6 +85,8 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
             "start timer"
 
     };
+
+
     private static final int VALID_COMMANDS_SIZE = VALID_COMMANDS.length;
 
 
@@ -137,30 +138,32 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         final String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
 
 
+        pulseView.startPulse();
+
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        SpeechListener recognitionListener = new SpeechListener();
+        speechRecognizer.setRecognitionListener((recognitionListener));
+        speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+
+        speechIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, "com.souschef.sork.sous_chef");
+
+        // Given a hint to the recognizer about what the user is going to say
+        speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+
+        //Specifiy how many results you want to receive. The results will be sorted where the first result is the one with higher confidence.
+        speechIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 20);
+
+        speechIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
+
+        //acquire the  wakelock to keep the screen on until user exits/closes the app
+        final PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        this.wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);
+        this.wakeLock.acquire();
+        speechRecognizer.startListening(speechIntent);
+       /*
         if (hasPermissions(this, PERMISSIONS)) {
 
-            pulseView.startPulse();
 
-            speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
-            SpeechListener recognitionListener = new SpeechListener();
-            speechRecognizer.setRecognitionListener((recognitionListener));
-            speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-
-            speechIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, "com.souschef.sork.sous_chef");
-
-            // Given a hint to the recognizer about what the user is going to say
-            speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-
-            //Specifiy how many results you want to receive. The results will be sorted where the first result is the one with higher confidence.
-            speechIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 20);
-
-            speechIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
-
-            //acquire the  wakelock to keep the screen on until user exits/closes the app
-            final PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            this.wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);
-            this.wakeLock.acquire();
-            speechRecognizer.startListening(speechIntent);
         } else {
 
             new AlertDialog.Builder(this)
@@ -180,7 +183,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                     })
                     .create().show();
 
-        }
+        }*/
 
 
     }
@@ -259,7 +262,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         public void onEndOfSpeech() {
             Log.d(TAG, "End of Speech");
             pulseView.finishPulse();
-            speechRecognizer.destroy();
+            //speechRecognizer.destroy();
 
 
         }
@@ -349,17 +352,32 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                 finish();
                 break;
             case 3:
-                returnString = "previous task";
+                returnString = "next task";
                 CommandMonitor.getMonitor().setCommand(returnString);
                 finish();
                 break;
             case 4:
-                returnString = "previous task";
+                returnString = "next task";
                 CommandMonitor.getMonitor().setCommand(returnString);
                 finish();
                 break;
             case 5:
+                returnString = "previous task";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+            case 6:
+                returnString = "previous task";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+            case 7:
                 returnString = "repeat";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+            case 8:
+                returnString = "start timer";
                 CommandMonitor.getMonitor().setCommand(returnString);
                 finish();
                 break;
