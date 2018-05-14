@@ -46,8 +46,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
     //to post changes to progress bar
     private Handler handler = new Handler();
 
-    //ui textview
-    TextView responseText;
 
     //intent for speechRecognition
     Intent speechIntent;
@@ -100,8 +98,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        responseText = findViewById(R.id.responseText);
-
         startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,12 +121,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
         speaker = new Speaker(this);
         startListeningButton();
-    }
-
-    private void readText() {
-        String viewText = responseText.getText().toString();
-
-        toSpeech.speak(viewText, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     private void readText(String finalResponse) {
@@ -183,6 +173,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            VoiceUI.this.finish();
                             dialog.dismiss();
                         }
                     })
@@ -333,12 +324,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         }
 
         final String finalResponse = response;
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                responseText.setText(finalResponse);
-            }
-        });
         speaker.readText(finalResponse);
     }
 
@@ -392,7 +377,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                 CommandMonitor.getMonitor().setCommand(returnString);
                 finish();
                 break;
-                
+
             case 9:
                 returnString = "start timer";
                 CommandMonitor.getMonitor().setCommand(returnString);

@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".VoiceUI">
 
-    <EditText
-        android:id="@+id/responseText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="194dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
 
     <TextView
         android:id="@+id/textView6"
@@ -74,8 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:pv_alpha="70"
-            app:pv_color="#009688"
-            app:pv_icon="@drawable/microphone_icon2"
+            app:pv_color="#ff9933"
+            app:pv_icon="@drawable/microphone_icon_orange"
             app:pv_icon_height="60dp"
             app:pv_icon_width="60dp"
             app:pv_interpolator="@android:anim/linear_interpolator"
@@ -97,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/microphone_icon2"
+            android:src="@drawable/microphone_icon_orange"
             android:background="@null"/>
 
 
