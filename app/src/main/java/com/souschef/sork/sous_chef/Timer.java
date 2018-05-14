@@ -92,12 +92,16 @@ public class Timer{
             public void onTick(long millisUntilFinished) {
                 timeLeftMilliseconds = millisUntilFinished;
                 countdownTimerTextView.setText(getTimeRemaining());
+                Log.d("TEST123", "Updated timer to " + countdownTimerTextView.getText());
             }
 
             @Override
             public void onFinish() {
-                // TODO Temporary
-                cookingActivity.speaker.readText("BEEP, BEEP, BEEP, Timer is up! BEEP, BEEP, BEEP");
+                timeLeftMilliseconds = 0;
+                countdownTimerTextView.setText(getTimeRemaining());
+                Log.d("TEST123", "Timer finished... " + countdownTimerTextView.getText());
+                timerRunning = false;
+                start.setVisibility(View.INVISIBLE);
 
                 if(monitor == null) {
                     monitor = new Monitor();
@@ -106,14 +110,14 @@ public class Timer{
                 if(timerPopupActivity == null) {
                     Intent intent = new Intent(cookingActivity.getBaseContext(), TimerPopupActivity.class);
                     cookingActivity.startActivity(intent);
-                    monitor.popups.add(expirationMessage);
+                    monitor.addPopup(expirationMessage);
                 } else {
                     if(timerPopupActivity.visible()) {
-                        monitor.popups.add(expirationMessage);
+                        monitor.addPopup(expirationMessage);
                     } else {
                         Intent intent = new Intent(cookingActivity.getBaseContext(), TimerPopupActivity.class);
                         cookingActivity.startActivity(intent);
-                        monitor.popups.add(expirationMessage);
+                        monitor.addPopup(expirationMessage);
                     }
                 }
 
@@ -135,6 +139,7 @@ public class Timer{
         countDownTimer.cancel();
         timeLeftMilliseconds = totalDurationMilliseconds;
         countdownTimerTextView.setText(getTimeRemaining());
+        start.setVisibility(View.VISIBLE);
         start.setText("Start");
     }
 
@@ -150,7 +155,6 @@ public class Timer{
 
     public static class TimerPopupActivity extends AppCompatActivity {
         private boolean visible = false;
-        private Speaker speaker;
         private LinearLayout timerPopupContainer;
         private Waiter waiter;
 
@@ -160,7 +164,6 @@ public class Timer{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_timer_popup);
             timerPopupActivity = this;
-            speaker = new Speaker(this);
             timerPopupContainer = findViewById(R.id.timerPopupContainer);
         }
 
@@ -204,6 +207,7 @@ public class Timer{
                 View view = (LinearLayout) inflater.inflate(R.layout.timer_popup_list_item, null, false);
                 TextView popupTimerInfo = (TextView) view.findViewById(R.id.popup_timer_info);
                 popupTimerInfo.setText(message);
+                CookingActivity.speaker.readText("BEEP BEEP BEEP " + message + " BEEP BEEP BEEP");
                 timerPopupContainer.addView(view);
             }
         }
@@ -217,25 +221,33 @@ public class Timer{
 
             public void run() {
                 while (true) {
-                    try {
-                        Thread.sleep(100);
-                        //
-                        if(monitor.popups.size() > 0) {
-                            timerPopupActivity.addPopup(monitor.popups.remove(0));
-                        }
-                    } catch (InterruptedException e) {
-                        return;
-                    }
+                    timerPopupActivity.addPopup(monitor.getPopup());
                 }
             }
         }
     }
 
-    private static class Monitor extends Observable{
+    private static class Monitor {
         private volatile ArrayList<String> popups;
 
         public Monitor() {
             popups = new ArrayList<>();
+        }
+
+        public synchronized void addPopup(String message) {
+            popups.add(message);
+            notifyAll();
+        }
+
+        public synchronized String getPopup() {
+            while(popups.size() == 0) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    //e.printStackTrace();
+                }
+            }
+            return popups.remove(0);
         }
     }
 }
