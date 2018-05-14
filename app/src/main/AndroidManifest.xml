@@ -33,7 +33,7 @@
         </activity>
         <activity
             android:name=".VoiceUI"
-            android:theme="@style/Theme.AppCompat.Dialog.Alert" />
+            android:theme="@style/customPopup" />
         <activity
             android:name=".RecipeChooserActivity"
             android:label="@string/title_activity_recipe_chooser"

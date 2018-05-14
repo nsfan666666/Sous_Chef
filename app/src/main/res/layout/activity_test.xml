@@ -65,12 +65,11 @@
             android:layout_height="wrap_content"
             app:pv_alpha="70"
             app:pv_color="#ff9933"
-            app:pv_icon="@drawable/microphone_icon_orange"
+            app:pv_icon="@drawable/microphone_icon2_oranger"
             app:pv_icon_height="60dp"
             app:pv_icon_width="60dp"
-            app:pv_interpolator="@android:anim/linear_interpolator"
 
-            />
+            app:pv_interpolator="@android:anim/linear_interpolator" />
 
 
     </FrameLayout>
@@ -86,9 +85,9 @@
             android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:scaleType="fitXY"
-            android:src="@drawable/microphone_icon2_oranger"
-            android:background="@null"/>
+            android:src="@drawable/microphone_icon2_oranger" />
 
 
     </LinearLayout>
