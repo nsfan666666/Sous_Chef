@@ -82,7 +82,12 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
             "previous task",
             "previous",
             "repeat",
-            "start timer"
+            "start timer",
+            "start",
+            "pause timer",
+            "pause",
+            "reset timer",
+            "reset"
 
     };
 
@@ -384,6 +389,36 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                 break;
             case 8:
                 returnString = "start timer";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+                
+            case 9:
+                returnString = "start timer";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+
+            case 10:
+                returnString = "pause timer";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+
+            case 11:
+                returnString = "pause timer";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+
+            case 12:
+                returnString = "reset timer";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+
+            case 13:
+                returnString = "reset timer";
                 CommandMonitor.getMonitor().setCommand(returnString);
                 finish();
                 break;
