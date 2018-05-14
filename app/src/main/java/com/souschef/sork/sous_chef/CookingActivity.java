@@ -30,7 +30,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     private VerticalStepperFormLayout verticalStepperForm;
     private EditText name;
 
-    public Speaker speaker;
+    public static Speaker speaker;
     private static RecipeLite recipe;
     private int stepCompleted = 0;
 
@@ -116,6 +116,12 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
                 repeat();
             } else if(command.equals("previous task")) {
                 previous();
+            } else if(command.equals("start timer")) {
+                startTimer();
+            } else if(command.equals("pause timer")) {
+                pauseTimer();
+            } else if(command.equals("reset timer")) {
+                resetTimer();
             }
         }
     }
