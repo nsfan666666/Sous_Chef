@@ -23,20 +23,21 @@ public class SplashActivity extends AppCompatActivity {
         long start = System.currentTimeMillis();
         setContentView(R.layout.activity_splash);
 
+        int sleepyTime = 3000;
+
         // The request code used in ActivityCompat.requestPermissions()
         // and returned in the Activity's onRequestPermissionsResult()
         int PERMISSION_ALL = 1;
         String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
 
         if (!hasPermissions(this, PERMISSIONS)) {
-            //  ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-            //  ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_PERMISSION_CODE);
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+            sleepyTime += 10000;
         }
 
 
             Intent intent = new Intent(this, RecipeChooserActivity.class);
-            while (System.currentTimeMillis() < start + 3000) {
+            while (System.currentTimeMillis() < start + sleepyTime) {
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
@@ -48,40 +49,6 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    private boolean requestRecordAudioPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)) {
-                /*
-                new AlertDialog.Builder(this)
-                        .setTitle("Permission needed")
-                        .setMessage("This permission is needed so that the Sous chef can hear you")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.requestPermissions(SplashActivity.this,new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_PERMISSION_CODE);
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .create().show();
-                        */
-
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_PERMISSION_CODE);
-                return true;
-            }
-
-        } else
-            return true;
-
-        return false;
-
-
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
