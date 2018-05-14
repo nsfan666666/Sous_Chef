@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -109,6 +110,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
         sensorManager.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         String command = CommandMonitor.getMonitor().getCommand().toLowerCase();
+        CommandMonitor.getMonitor().setCommand("");
         if(command.length() > 0) {
             if(command.equals("next task")) {
                 next();
