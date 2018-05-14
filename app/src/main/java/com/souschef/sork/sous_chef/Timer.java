@@ -71,7 +71,7 @@ public class Timer{
             @Override
             public void onClick(View v) {
                 reset();
-                ((Button) v).setVisibility(View.INVISIBLE);
+                ((Button) v).setVisibility(View.GONE);
             }
         });
     }
@@ -99,7 +99,7 @@ public class Timer{
                 timeLeftMilliseconds = 0;
                 countdownTimerTextView.setText(getTimeRemaining());
                 timerRunning = false;
-                start.setVisibility(View.INVISIBLE);
+                start.setVisibility(View.GONE);
 
                 if(monitor == null) {
                     monitor = new Monitor();
