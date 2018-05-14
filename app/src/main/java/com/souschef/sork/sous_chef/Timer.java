@@ -92,14 +92,12 @@ public class Timer{
             public void onTick(long millisUntilFinished) {
                 timeLeftMilliseconds = millisUntilFinished;
                 countdownTimerTextView.setText(getTimeRemaining());
-                Log.d("TEST123", "Updated timer to " + countdownTimerTextView.getText());
             }
 
             @Override
             public void onFinish() {
                 timeLeftMilliseconds = 0;
                 countdownTimerTextView.setText(getTimeRemaining());
-                Log.d("TEST123", "Timer finished... " + countdownTimerTextView.getText());
                 timerRunning = false;
                 start.setVisibility(View.INVISIBLE);
 
@@ -175,6 +173,7 @@ public class Timer{
         protected void onPause() {
             super.onPause();
             visible = false;
+            Log.d("TEST123", "Interrupting thread...");
             waiter.interrupt();
         }
 
@@ -205,9 +204,29 @@ public class Timer{
             public void run() {
                 LayoutInflater inflater = LayoutInflater.from(context);
                 View view = (LinearLayout) inflater.inflate(R.layout.timer_popup_list_item, null, false);
+
                 TextView popupTimerInfo = (TextView) view.findViewById(R.id.popup_timer_info);
                 popupTimerInfo.setText(message);
+
+                Button confirmPopupTimer = (Button) view.findViewById(R.id.confirm_popup_timer);
+                confirmPopupTimer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LinearLayout firstParent = (LinearLayout) v.getParent();
+                        LinearLayout secondParent = (LinearLayout) firstParent.getParent();
+                        secondParent.removeView(firstParent);
+                        if(secondParent.getChildCount() == 1) {
+                            // Hide popup window
+                            if(timerPopupActivity != null) {
+                                timerPopupActivity.finish();
+                            }
+                        }
+                    }
+                });
+
                 CookingActivity.speaker.readText("BEEP BEEP BEEP " + message + " BEEP BEEP BEEP");
+
+
                 timerPopupContainer.addView(view);
             }
         }
@@ -221,7 +240,12 @@ public class Timer{
 
             public void run() {
                 while (true) {
-                    timerPopupActivity.addPopup(monitor.getPopup());
+                    try {
+                        timerPopupActivity.addPopup(monitor.getPopup());
+                    } catch (InterruptedException e) {
+                        Log.d("TEST123", "Thread shutdown");
+                        return;
+                    }
                 }
             }
         }
@@ -239,13 +263,9 @@ public class Timer{
             notifyAll();
         }
 
-        public synchronized String getPopup() {
+        public synchronized String getPopup() throws InterruptedException{
             while(popups.size() == 0) {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    //e.printStackTrace();
-                }
+                wait();
             }
             return popups.remove(0);
         }
