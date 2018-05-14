@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/microphone_icon_orange"
+            android:src="@drawable/microphone_icon2_oranger"
             android:background="@null"/>
 
 
