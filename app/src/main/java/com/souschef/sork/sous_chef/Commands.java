@@ -14,6 +14,7 @@ public interface Commands {
      */
     public void start();
     public void startTimer();
-    public void pause();
+    public void pauseTimer();
+    public void resetTimer();
 
 }

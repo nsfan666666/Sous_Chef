@@ -24,22 +24,12 @@ public class Instruction implements Serializable{
 
     public static class Timer implements Serializable{
         public int duration; // Seconds
+        public String expirationMessage;
 
-        public Timer(int hours, int minutes, int seconds) {
+        public Timer(int hours, int minutes, int seconds, String expirationMessage) {
             duration = 3600 * hours + 60 * minutes + seconds;
+            this.expirationMessage = expirationMessage;
         }
-
-        @Override
-        public String toString() {
-            int tempDuration = duration;
-            int hours = tempDuration / 3600;
-            tempDuration = tempDuration % 3600;
-            int minutes = tempDuration / 60;
-            tempDuration = tempDuration % 60;
-            int seconds = tempDuration;
-            return String.format("%02d:%02d:%02d",hours, minutes, seconds);
-        }
-
     }
 }
 

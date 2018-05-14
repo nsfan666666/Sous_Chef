@@ -41,4 +41,9 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="customPopup" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
 </resources>

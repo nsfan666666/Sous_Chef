@@ -13,15 +13,14 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.HashMap;
+import java.util.Map;
 
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
@@ -31,7 +30,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     private VerticalStepperFormLayout verticalStepperForm;
     private EditText name;
 
-    private Speaker speaker;
+    public Speaker speaker;
     private static RecipeLite recipe;
     private int stepCompleted = 0;
 
@@ -42,6 +41,9 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     private SensorManager sensorManager;
     private Sensor proximitySensor;
     private final static int SENSOR_SENSITIVITY = 5;
+
+    // Timers
+    Map<Integer, com.souschef.sork.sous_chef.Timer> timers = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,29 +143,12 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
             if(description != null) {
                 description.setText(recipe.instructions.get(stepNumber).description);
             }
-            TextView timerText = (TextView) view.findViewById(R.id.timer_text);
-            if(timerText != null) {
-                timerText.setText(recipe.instructions.get(stepNumber).timer.toString());
-            }
 
-            Button startTimerButton = (Button) view.findViewById(R.id.start_timer_button);
-            startTimerButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Button button = (Button) v;
-                    if(button.getText() == "Start timer") {
-                        // TODO Start timer
-                        final Timer timer = new Timer();
+            // Add the timer textView and start and pause buttons
+            Timer timer = new Timer(this, recipe.instructions.get(stepNumber).timer.duration * 1000, recipe.instructions.get(stepNumber).timer.expirationMessage);
+            timers.put(stepNumber, timer);
+            ((LinearLayout) view).addView(timer.getRootView());
 
-                        //timer.scheduleAtFixedRate(timerTask, 0, 1000);
-
-                        button.setText("Pause timer");
-                    } else {
-                        // TODO Pause timer
-                        button.setText("Start timer");
-                    }
-                }
-            });
         } else {
             // Regular layout
             view = (LinearLayout) inflater.inflate(R.layout.cooking_instruction_layout, null, false);
@@ -237,26 +222,36 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
     @Override
     public void startTimer() {
-        // TODO
-
+        int stepNumber = verticalStepperForm.getActiveStepNumber();
+        Timer timer = timers.get(stepNumber);
+        if(timer != null) {
+            if(!timer.timerRunning) {
+                timer.start();
+            } else {
+                speaker.readText("The timer is already running");
+            }
+        }
     }
 
     @Override
-    public void pause() {
-        // TODO
+    public void pauseTimer() {
+        int stepNumber = verticalStepperForm.getActiveStepNumber();
+        Timer timer = timers.get(stepNumber);
+        if(timer != null) {
+            if(timer.timerRunning) {
+                timer.pause();
+            } else {
+                speaker.readText("The timer is paused");
+            }
+        }
     }
 
-    public class CustomTimerTask extends TimerTask {
-        int duration; // Seconds
-        int elapsed;
-
-        public CustomTimerTask(int duration) {
-            this.duration = duration;
-        }
-
-        @Override
-        public void run() {
-
+    @Override
+    public void resetTimer() {
+        int stepNumber = verticalStepperForm.getActiveStepNumber();
+        Timer timer = timers.get(stepNumber);
+        if(timer != null) {
+            timer.reset();
         }
     }
 
