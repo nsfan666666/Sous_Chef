@@ -219,6 +219,8 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         public void onEndOfSpeech() {
             Log.d(TAG, "End of Speech");
             pulseView.finishPulse();
+            speechRecognizer.destroy();
+
 
         }
 

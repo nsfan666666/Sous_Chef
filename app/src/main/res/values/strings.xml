@@ -10,5 +10,6 @@
     <string name="previous">\"Previous\"</string>
     <string name="repeat">\"Repeat\"</string>
     <string name="start_timer">\"Start timer\"</string>
+    <string name="ok">Ok</string>
 
 </resources>
