@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
 
         if (!hasPermissions(this, PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-            sleepyTime += 10000;
+            sleepyTime += 7000;
         }
 
 

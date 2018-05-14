@@ -1,7 +1,10 @@
 package com.souschef.sork.sous_chef;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,6 +16,8 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -84,7 +89,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
     private static final int VALID_COMMANDS_SIZE = VALID_COMMANDS.length;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,34 +133,70 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
     // @Override
     protected void startListeningButton() {
-        // super.onStart();
+        final int PERMISSION_CODE = 1;
+        final String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
 
-        pulseView.startPulse();
 
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
-        SpeechListener recognitionListener = new SpeechListener();
-        speechRecognizer.setRecognitionListener((recognitionListener));
-        speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        if (hasPermissions(this, PERMISSIONS)) {
 
-        speechIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, "com.souschef.sork.sous_chef");
+            pulseView.startPulse();
 
-        // Given a hint to the recognizer about what the user is going to say
-        speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+            SpeechListener recognitionListener = new SpeechListener();
+            speechRecognizer.setRecognitionListener((recognitionListener));
+            speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
-        //Specifiy how many results you want to receive. The results will be sorted where the first result is the one with higher confidence.
-        speechIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 20);
+            speechIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, "com.souschef.sork.sous_chef");
 
-        speechIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
+            // Given a hint to the recognizer about what the user is going to say
+            speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 
-        //acquire the  wakelock to keep the screen on until user exits/closes the app
-        final PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        this.wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);
-        this.wakeLock.acquire();
-        speechRecognizer.startListening(speechIntent);
+            //Specifiy how many results you want to receive. The results will be sorted where the first result is the one with higher confidence.
+            speechIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 20);
 
+            speechIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
+
+            //acquire the  wakelock to keep the screen on until user exits/closes the app
+            final PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            this.wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);
+            this.wakeLock.acquire();
+            speechRecognizer.startListening(speechIntent);
+        } else {
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Permission needed")
+                    .setMessage("All of these permissions are needed so that Sous Chef can hear and understand you")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(VoiceUI.this, PERMISSIONS, PERMISSION_CODE);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .create().show();
+
+        }
 
 
     }
+
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
     //Implemented method from SensorEventListener.
     @Override
