@@ -183,6 +183,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            VoiceUI.this.finish();
                             dialog.dismiss();
                         }
                     })
@@ -392,7 +393,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                 CommandMonitor.getMonitor().setCommand(returnString);
                 finish();
                 break;
-                
+
             case 9:
                 returnString = "start timer";
                 CommandMonitor.getMonitor().setCommand(returnString);
