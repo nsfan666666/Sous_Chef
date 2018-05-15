@@ -179,6 +179,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
         verticalStepperForm.setStepAsCompleted(stepNumber);
 
+
         if(stepCompleted < stepNumber) {
             stepCompleted = stepNumber;
         } else {
