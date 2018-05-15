@@ -41,7 +41,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     // Sensor
     private SensorManager sensorManager;
     private Sensor proximitySensor;
-    private final static int SENSOR_SENSITIVITY = 5;
+    public final static int SENSOR_SENSITIVITY = 5;
 
     // Timers
     Map<Integer, com.souschef.sork.sous_chef.Timer> timers = new HashMap<>();

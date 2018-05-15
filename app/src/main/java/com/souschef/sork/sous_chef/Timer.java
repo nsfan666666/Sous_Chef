@@ -2,6 +2,10 @@ package com.souschef.sork.sous_chef;
 
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -155,11 +159,14 @@ public class Timer{
         return String.format("%02d:%02d:%02d",hours, minutes, seconds);
     }
 
-    public static class TimerPopupActivity extends AppCompatActivity {
+    public static class TimerPopupActivity extends AppCompatActivity implements SensorEventListener {
         private boolean visible = false;
         private LinearLayout timerPopupContainer;
         private Waiter waiter;
 
+        // Sensor
+        private SensorManager sensorManager;
+        private Sensor proximitySensor;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +174,9 @@ public class Timer{
             setContentView(R.layout.activity_timer_popup);
             timerPopupActivity = this;
             timerPopupContainer = findViewById(R.id.timerPopupContainer);
+
+            sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+            proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         }
 
         public boolean visible() {
@@ -176,6 +186,7 @@ public class Timer{
         @Override
         protected void onPause() {
             super.onPause();
+            sensorManager.unregisterListener(this);
             visible = false;
             Log.d("TEST123", "Interrupting thread...");
             waiter.interrupt();
@@ -184,9 +195,27 @@ public class Timer{
         @Override
         protected void onResume() {
             super.onResume();
+            sensorManager.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
             visible = true;
             waiter = new Waiter(this);
             waiter.start();
+        }
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            Log.d("TEST123", "Sensor changed");
+            if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+                if (event.values[0] >= -CookingActivity.SENSOR_SENSITIVITY && event.values[0] <= CookingActivity.SENSOR_SENSITIVITY) {
+                    Log.d("TEST123", "Finish");
+                    finish();
+                }
+            }
+        }
+
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
         }
 
         public void addPopup(String message) {
