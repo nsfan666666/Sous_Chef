@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.gigamole.library.PulseView;
 
@@ -81,7 +82,10 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
             "reset timer",
             "reset",
             "show ingredients",
-            "ingredients"
+            "ingredients",
+            "return",
+            "hide ingredients",
+            "hide"
 
     };
 
@@ -121,7 +125,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
     // @Override
     protected void startListeningButton() {
-
+        speaker.readText("");
 
         if (hasPermissions(this, PERMISSIONS)) {
 
@@ -265,7 +269,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                 Log.d(TAG, "Other error");
             }
             //speechRecognizer.destroy();
-           // pulseView.finishPulse();
+            // pulseView.finishPulse();
 
         }
 
@@ -281,7 +285,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                     processCommand(matchesStrings);
                 }
             }
-                startListeningButton();
         }
 
         @Override
@@ -316,11 +319,9 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
         final String finalResponse = response;
         speaker.readText(finalResponse);
-        if(finalResponse.equals(wrongString)){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(wrongString).create().show();
+        if (finalResponse.equals(wrongString)) {
+            Toast.makeText(this, wrongString, Toast.LENGTH_SHORT).show();
 
-            startListeningButton();
         }
 
 
@@ -414,6 +415,25 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
             case 15:
                 returnString = "show ingredients";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+
+
+            case 16:
+                returnString = "return";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+
+            case 17:
+                returnString = "return";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+
+            case 18:
+                returnString = "return";
                 CommandMonitor.getMonitor().setCommand(returnString);
                 finish();
                 break;

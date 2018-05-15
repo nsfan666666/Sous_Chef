@@ -285,6 +285,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
             if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
                 startVoice(null);
+                speaker.readText("");
             }
         }
 

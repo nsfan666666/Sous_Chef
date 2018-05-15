@@ -57,16 +57,16 @@ public class Recipe{
         instructions1.add(new Instruction("Boil water", "Set four liters of water to boil"));
         instructions1.add(new Instruction("Salt water", "Put two teaspoons of salt in the water"));
         instructions1.add(new Instruction("Chop onion", "Chop the onion"));
-        instructions1.add(new Instruction("Put spaghetti into water", "Put one kg of spaghetti into the water when it boils"));
+        instructions1.add(new Instruction("Put spaghetti into water", "Put the spaghetti into the water when it boils"));
         instructions1.add(new Instruction("Set a timer", "Set a timer to eleven minutes. When it rings put the spaghetti into a colander", new Instruction.Timer(0, 11, 0, "Your spaghetti should be ready now, put it into a colander.")));
         instructions1.add(new Instruction("Fry onion", "Fry the chopped onion on low temperature for about 3 minutes", new Instruction.Timer(0, 3, 0, "The onion should be ready now")));
         instructions1.add(new Instruction("Remove onion", "Put the fried onion into a pot"));
         instructions1.add(new Instruction("Fry minced meat", "Fry the minced meat on medium-high temperature for about 6 minutes", new Instruction.Timer(0, 6, 0, "The minced meat should be ready now")));
         instructions1.add(new Instruction("Put it in a pot", "Put the minced meat in the same pot as the onion"));
-        instructions1.add(new Instruction("Add the crushed tomato", "Add one kg of crushed tomato to the pot"));
+        instructions1.add(new Instruction("Add the crushed tomato", "Add 1 kg crushed tomato to the pot"));
         instructions1.add(new Instruction("Let it simmer", "Let it simmer for five minutes", new Instruction.Timer(0, 5, 0, "The dish has now simmered for 5 minutes")));
         instructions1.add(new Instruction("Add calf fund", "Add two tablespoons of calf fund"));
-        instructions1.add(new Instruction("Add spices", "Add one tablespoon of oregano, one tablespoon of basil, two teespoons of sage and a pinch of white pepper"));
+        instructions1.add(new Instruction("Add spices", "Add 2 tbsp of oregano, one tbsp of basil, two tsp of sage and a pinch of white pepper"));
         instructions1.add(new Instruction("Stir and serve", "Stir so that it evens out and it is ready for serving"));
 
         /*
