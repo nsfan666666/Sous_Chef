@@ -43,6 +43,17 @@ public class Recipe{
         instructions1.add(new Instruction("Timer test 1", "Test timer", new Instruction.Timer(0, 0, 10, "The test timer 1 has expired"))); // TODO Temp
         instructions1.add(new Instruction("Timer test 2", "Test timer", new Instruction.Timer(0, 0, 5, "The test timer 2 has expired"))); // TODO Temp
         */
+        instructions1.add(new Instruction("Ingredients","Ingredients for 4 people \n" +
+                "800 grams of minced meat \n"+
+                "1 kg Spaghetti\n" +
+                "1 kg crushed tomatoes\n" +
+                "1 diced onion\n" +
+                "2 tbsp Calf fond\n" +
+                "1 tbsp of salt(or to taste)\n"+
+                "1 tbsp White pepper\n"+
+                "1 tbsp Basil\n"+
+                "1 tbsp Sage\n"+
+                "2 tbsp Oregano",null));
         instructions1.add(new Instruction("Boil water", "Set four liters of water to boil", null));
         instructions1.add(new Instruction("Salt water", "Put two teaspoons of salt in the water", null));
         instructions1.add(new Instruction("Chop onion", "Chop the onion", null));
