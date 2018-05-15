@@ -194,11 +194,14 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
         if(stepCompleted < stepNumber) {
             stepCompleted = stepNumber;
-        } else if(stepNumber != 1){
+        }
+        /* Enable if we want steps to uncomplete when going back
+        else if(stepNumber != 1){
             for(int i = stepNumber + 1; i <= stepCompleted; i++) {
                 verticalStepperForm.setStepAsUncompleted(i, null);
             }
         }
+        */
     }
 
     @Override
@@ -261,6 +264,8 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
             } else {
                 speaker.readText("The timer is already running");
             }
+        } else {
+            speaker.readText("There is no timer for the current instruction");
         }
     }
 
