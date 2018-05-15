@@ -15,21 +15,18 @@ import android.os.PowerManager;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
-import android.speech.tts.TextToSpeech;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.gigamole.library.PulseView;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 
 public class VoiceUI extends AppCompatActivity implements SensorEventListener {
@@ -63,9 +60,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
 
     //Text to speech
-    private TextToSpeech toSpeech;
-
-
     private Speaker speaker;
 
     CommandMonitor monitor;
@@ -85,9 +79,13 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
             "pause timer",
             "pause",
             "reset timer",
-            "reset"
+            "reset",
+            "show ingredients",
+            "ingredients"
 
     };
+
+    private static final String wrongString = "I'm sorry, I didn't get that. Please try again";
 
 
     private static final int VALID_COMMANDS_SIZE = VALID_COMMANDS.length;
@@ -95,7 +93,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
     //permissions
     final int PERMISSION_CODE = 1;
     final String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
-
 
 
     @Override
@@ -116,26 +113,14 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
-        toSpeech = new TextToSpeech(VoiceUI.this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                toSpeech.setLanguage(Locale.US);
-
-            }
-        });
 
         speaker = new Speaker(this);
         startListeningButton();
     }
 
-    private void readText(String finalResponse) {
-        toSpeech.speak(finalResponse, TextToSpeech.QUEUE_FLUSH, null);
-    }
 
     // @Override
     protected void startListeningButton() {
-
-
 
 
         if (hasPermissions(this, PERMISSIONS)) {
@@ -188,7 +173,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                     .create().show();
 
         }
-
 
 
     }
@@ -268,7 +252,6 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
             Log.d(TAG, "End of Speech");
             pulseView.finishPulse();
 
-
         }
 
         @Override
@@ -280,10 +263,9 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                 Log.d(TAG, "DUDE, you need permissions");
             } else {
                 Log.d(TAG, "Other error");
-                //speechRecognizer.startListening(speechIntent);
             }
-            speechRecognizer.destroy();
-            pulseView.finishPulse();
+            //speechRecognizer.destroy();
+           // pulseView.finishPulse();
 
         }
 
@@ -299,6 +281,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                     processCommand(matchesStrings);
                 }
             }
+                startListeningButton();
         }
 
         @Override
@@ -315,7 +298,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
     }
 
     private void processCommand(ArrayList<String> matchesStrings) {
-        String response = "I'm sorry Dave, I'm afraid I can't do that";
+        String response = wrongString;
         int maxStrings = matchesStrings.size();
         boolean resultFound = true;
         for (int i = 0; i < VALID_COMMANDS_SIZE && resultFound; i++) {
@@ -326,19 +309,27 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
             }
 
         }
-        if(!resultFound){
-            speechRecognizer.destroy();
+        if (!resultFound) {
+            speechRecognizer.cancel();
             pulseView.finishPulse();
         }
 
         final String finalResponse = response;
         speaker.readText(finalResponse);
+        if(finalResponse.equals(wrongString)){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(wrongString).create().show();
+
+            startListeningButton();
+        }
+
+
     }
 
 
     private String getResponse(int command) {
 
-        String returnString = "I'm sorry, Dave. I'm afraid I can't do that";
+        String returnString = wrongString;
         switch (command) {
             case 0:
                 returnString = "next task";
@@ -412,6 +403,17 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
             case 13:
                 returnString = "reset timer";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+            case 14:
+                returnString = "show ingredients";
+                CommandMonitor.getMonitor().setCommand(returnString);
+                finish();
+                break;
+
+            case 15:
+                returnString = "show ingredients";
                 CommandMonitor.getMonitor().setCommand(returnString);
                 finish();
                 break;
