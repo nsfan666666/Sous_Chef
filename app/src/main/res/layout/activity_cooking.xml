@@ -32,7 +32,7 @@
             android:text="Recipe"
             android:textSize="30dp"
             android:layout_toRightOf="@id/micButton"
-            android:layout_marginLeft="4dp"/>
+            android:layout_marginLeft="4dp" />
 
         <View
             android:id="@+id/line"

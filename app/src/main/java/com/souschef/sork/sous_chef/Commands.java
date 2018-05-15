@@ -9,6 +9,8 @@ public interface Commands {
     public void next();
     public void previous();
     public void repeat();
+    public void showIngredients();
+    public void returnToInstruction();
     /*
     Starts the recipe, reads first instruction
      */

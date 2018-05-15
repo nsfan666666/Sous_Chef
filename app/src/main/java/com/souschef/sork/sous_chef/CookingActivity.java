@@ -124,6 +124,10 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
                 pauseTimer();
             } else if(command.equals("reset timer")) {
                 resetTimer();
+            } else if(command.equals("show ingredients")) {
+                showIngredients();
+            } else if(command.equals("return")) {
+                returnToInstruction();
             }
         }
     }
@@ -177,12 +181,13 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
             }
         }
 
+
         verticalStepperForm.setStepAsCompleted(stepNumber);
 
 
         if(stepCompleted < stepNumber) {
             stepCompleted = stepNumber;
-        } else {
+        } else if(stepNumber != 1){
             for(int i = stepNumber + 1; i <= stepCompleted; i++) {
                 verticalStepperForm.setStepAsUncompleted(i, null);
             }
@@ -222,6 +227,16 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     @Override
     public void repeat() {
         verticalStepperForm.goToStep(verticalStepperForm.getActiveStepNumber(), true);
+    }
+
+    @Override
+    public void showIngredients() {
+        verticalStepperForm.goToStep(1, false);
+    }
+
+    @Override
+    public void returnToInstruction() {
+        verticalStepperForm.goToStep(stepCompleted, false);
     }
 
     @Override
