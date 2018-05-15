@@ -140,6 +140,13 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
         sensorManager.unregisterListener(this);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        for(Timer t : timers.values()) {
+            t.pause();
+        }
+    }
 
     @Override
     public View createStepContentView(int stepNumber) {

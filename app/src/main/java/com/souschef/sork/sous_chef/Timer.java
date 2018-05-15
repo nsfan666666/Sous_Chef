@@ -127,9 +127,13 @@ public class Timer{
     }
 
     public void pause() {
-        countDownTimer.cancel();
+        if(countDownTimer != null) {
+            countDownTimer.cancel();
+        }
         timerRunning = false;
-        start.setText("Start");
+        if(start != null) {
+            start.setText("Start");
+        }
     }
 
     public void reset() {
