@@ -17,6 +17,11 @@ public class Instruction implements Serializable{
         this.description = description;
         this.timer = optionalTimer;
     }
+    public Instruction(String title, String description) {
+        this.title = title;
+        this.description = description;
+        this.timer = null;
+    }
 
     public boolean isTimer() {
         return timer != null;
