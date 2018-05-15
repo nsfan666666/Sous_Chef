@@ -43,11 +43,11 @@ public class Recipe{
         instructions1.add(new Instruction("Timer test 1", "Test timer", new Instruction.Timer(0, 0, 10, "The test timer 1 has expired"))); // TODO Temp
         instructions1.add(new Instruction("Timer test 2", "Test timer", new Instruction.Timer(0, 0, 5, "The test timer 2 has expired"))); // TODO Temp
         */
-        instructions1.add(new Instruction("Ingredients","Ingredients for 4 people \n" +
+        instructions1.add(new Instruction("Ingredients","Ingredients for 4 people \n \n" +
                 "800 grams of minced meat \n"+
                 "1 kg Spaghetti\n" +
                 "1 kg crushed tomatoes\n" +
-                "1 diced onion\n" +
+                "1 diced medium sized onion\n" +
                 "2 tbsp Calf fond\n" +
                 "1 tbsp of salt(or to taste)\n"+
                 "1 tbsp White pepper\n"+
