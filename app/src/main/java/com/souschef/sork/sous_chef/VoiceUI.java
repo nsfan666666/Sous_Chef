@@ -92,6 +92,11 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
     private static final int VALID_COMMANDS_SIZE = VALID_COMMANDS.length;
 
+    //permissions
+    final int PERMISSION_CODE = 1;
+    final String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,34 +134,36 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
     // @Override
     protected void startListeningButton() {
-        final int PERMISSION_CODE = 1;
-        final String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
 
 
-        pulseView.startPulse();
 
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
-        SpeechListener recognitionListener = new SpeechListener();
-        speechRecognizer.setRecognitionListener((recognitionListener));
-        speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-
-        speechIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, "com.souschef.sork.sous_chef");
-
-        // Given a hint to the recognizer about what the user is going to say
-        speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-
-        //Specifiy how many results you want to receive. The results will be sorted where the first result is the one with higher confidence.
-        speechIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 20);
-
-        speechIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
-
-        //acquire the  wakelock to keep the screen on until user exits/closes the app
-        final PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        this.wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);
-        this.wakeLock.acquire();
-        speechRecognizer.startListening(speechIntent);
 
         if (hasPermissions(this, PERMISSIONS)) {
+
+
+            speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+            SpeechListener recognitionListener = new SpeechListener();
+            speechRecognizer.setRecognitionListener((recognitionListener));
+            speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+
+            speechIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, "com.souschef.sork.sous_chef");
+
+            // Given a hint to the recognizer about what the user is going to say
+            speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+
+            //Specifiy how many results you want to receive. The results will be sorted where the first result is the one with higher confidence.
+            speechIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 20);
+
+            speechIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
+
+            //acquire the  wakelock to keep the screen on until user exits/closes the app
+            final PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            this.wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);
+            this.wakeLock.acquire();
+
+            //Start Listening
+            speechRecognizer.startListening(speechIntent);
+            pulseView.startPulse();
 
 
         } else {
@@ -173,8 +180,9 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            VoiceUI.this.finish();
                             dialog.dismiss();
+                            VoiceUI.this.finish();
+
                         }
                     })
                     .create().show();
