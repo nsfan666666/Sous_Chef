@@ -48,7 +48,7 @@ public class Recipe{
                 "½ kg Spaghetti\n" +
                 "1 kg crushed tomatoes\n" +
                 "1 medium sized onion\n" +
-                "2 tbsp Calf fond\n" +
+                "2 tbsp veal stock\n" +
                 "1 tbsp of salt(or to taste)\n"+
                 "1 tbsp White pepper\n"+
                 "1 tbsp Basil\n"+
@@ -65,7 +65,7 @@ public class Recipe{
         instructions1.add(new Instruction("Put it in a pot", "Put the minced meat in the same pot as the onion"));
         instructions1.add(new Instruction("Add the crushed tomato", "Add 1 kg crushed tomato to the pot"));
         instructions1.add(new Instruction("Let it simmer", "Let it simmer for five minutes", new Instruction.Timer(0, 5, 0, "The dish has now simmered for 5 minutes")));
-        instructions1.add(new Instruction("Add calf fund", "Add two tablespoons of calf fund"));
+        instructions1.add(new Instruction("Add veal stock", "Add two tablespoons of veal stock"));
         instructions1.add(new Instruction("Add spices", "Add 2 tbsp of oregano, one tbsp of basil, two tsp of sage and a pinch of white pepper"));
         instructions1.add(new Instruction("Stir and serve", "Stir so that it evens out and it is ready for serving"));
 
