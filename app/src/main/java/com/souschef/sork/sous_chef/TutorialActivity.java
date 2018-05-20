@@ -24,15 +24,17 @@ public class TutorialActivity extends AppCompatActivity implements SensorEventLi
         setContentView(R.layout.activity_tutorial);
 
         ImageView image = (ImageView) findViewById(R.id.tutorialImage);
+        Bitmap bitmap;
         switch (StartTutorial.currentTutorial) {
             case StartTutorial.RECIPE_CHOOSER:
                 // TODO Load the correct image
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tut1);
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tut1);
                 image.setImageBitmap(bitmap);
                 break;
             case StartTutorial.COOKING:
                 // TODO Load the correct image
-
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tut2);
+                image.setImageBitmap(bitmap);
                 break;
         }
 
