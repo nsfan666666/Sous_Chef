@@ -31,8 +31,8 @@ public class TutorialActivity extends AppCompatActivity implements SensorEventLi
                 image.setImageBitmap(bitmap);
                 break;
             case StartTutorial.COOKING:
-                // TODO Load the correct image
-
+                Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.tut2);
+                image.setImageBitmap(bitmap1);
                 break;
         }
 
