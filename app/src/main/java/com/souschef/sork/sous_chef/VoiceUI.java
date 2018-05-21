@@ -34,7 +34,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
 
     private final static String TAG = VoiceUI.class.getName();
 
-    private final static int SENSOR_SENSITIVITY = 5;
+    private final static int SENSOR_SENSITIVITY = 1;
 
     //to keep screen on
     protected PowerManager.WakeLock wakeLock;
@@ -255,6 +255,7 @@ public class VoiceUI extends AppCompatActivity implements SensorEventListener {
         public void onEndOfSpeech() {
             Log.d(TAG, "End of Speech");
             pulseView.finishPulse();
+            //Toast.makeText(VoiceUI.this, "I have stopped listening", Toast.LENGTH_SHORT).show();
 
         }
 

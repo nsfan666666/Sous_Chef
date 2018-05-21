@@ -41,7 +41,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
     // Sensor
     private SensorManager sensorManager;
     private Sensor proximitySensor;
-    private final static int SENSOR_SENSITIVITY = 5;
+    private final static int SENSOR_SENSITIVITY = 1;
 
     // Timers
     Map<Integer, com.souschef.sork.sous_chef.Timer> timers = new HashMap<>();
@@ -55,7 +55,7 @@ public class CookingActivity extends AppCompatActivity implements VerticalSteppe
 
         recipe = (RecipeLite) getIntent().getExtras().getSerializable(RecipeChooserActivity.PlaceholderFragment.RECIPE_LITE);
 
-        recipe.instructions.add(0, new Instruction("Start", "Start cooking", null));
+        recipe.instructions.add(0, new Instruction("Start cooking - hover hand over camera", "Start cooking"));
 
         TextView recipeTitle = (TextView) findViewById(R.id.recipe);
         recipeTitle.setText(recipe.name);
